@@ -1,0 +1,54 @@
+@font-face {
+    font-family: lobster;
+    src: url("/../../assets/Lobster\ 1.4.otf");
+}
+
+#mainContainerHeader {
+    width: 1200px;
+    height: 100px;
+    margin: auto;
+}
+
+#titleContainer {
+    /*background-color: blue;*/
+    width: 400px;
+    height: 100px;
+    position: relative;
+
+}
+
+#loginRegisterContainer {
+    /*background-color: brown;*/
+    width: 800px;
+    height: 100px;
+    position: relative;
+    left: 400px;
+    bottom: 100px;
+}
+
+#titleHeader {
+    font-family: lobster;
+    font-size: 50px;
+    padding: 25px;
+    color: #6A1B9A;
+}
+
+#formHeader {
+    position: relative;
+    left: 350px;
+    color: #6A1B9A;
+}
+
+#question {
+    position: relative;
+    left: 350px;
+    display:inline;
+    color: #6A1B9A;
+}
+
+#registerButton {
+    position: relative;
+    display:inline;
+    left: 380px;
+    color: #6A1B9A;
+}
