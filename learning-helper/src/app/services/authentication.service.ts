@@ -14,8 +14,18 @@ export class AuthenticationService {
 
   login(user: {username: string, password: string}) {
     if (this.server.checkIfUserIsRegistered(user)) {
-      console.log("user: " + user.username + " is logged in.");
+      this.server.signIn(user);
     }
+  }
+
+  register(user: {firstName: string, lastName: string, username: string, email: string, password: string}) {
+    this.server.registerUser(user);
+    console.log("registrovan!");
+    this.server.printUsers();
+  }
+
+  isUserLoggedIn() {
+    return this.server.loggedInUserId !== 0;
   }
 
 

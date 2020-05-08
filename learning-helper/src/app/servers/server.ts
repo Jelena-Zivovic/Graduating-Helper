@@ -1,5 +1,10 @@
+import { User } from './user';
+
 export class Server {
-    users: {id: number, username: string, password: string}[] = [];
+
+    
+    users: User[] = [];
+    loggedInUserId: number;
 
     constructor() {
         
@@ -8,7 +13,7 @@ export class Server {
 
     checkIfUserIsRegistered(user) {
         for (let i = 0; i < this.users.length; i++) {
-            if (this.users[i].username === user.username) {
+            if (this.users[i].username === user.username && this.users[i].password === user.password) {
                 return true;
             }
         }
@@ -16,16 +21,38 @@ export class Server {
         return false;
     }
 
-    registerUser(user : {username: string, password: string}) {
-        if (!this.checkIfUserIsRegistered(user)) {
-            this.users.push({
-                id: this.users.length > 0 ? this.users[this.users.length-1].id + 1 : 1,
-                username: user.username,
-                password: user.password
-            });
-        }
+    registerUser(user : {firstName: string, lastName: string, username: string, email: string, password: string}) {
+       if (!this.checkIfUserIsRegistered(user)) {
+            let newId = this.users.length == 0 ? 1 : this.users[this.users.length-1].id + 1;
+            this.users.push(new User(
+                newId,
+                user.firstName,
+                user.lastName,
+                user.username,
+                user.email,
+                user.password
+            ))
+       }
         
     }
+
+    signIn(user: {username: string, password: string}) {
+        if (this.checkIfUserIsRegistered(user)) {
+            for (let i = 0; i < this.users.length; i++) {
+                if (this.users[i].username === user.username) {
+                    this.loggedInUserId = this.users[i].id;
+                    break;
+                }
+            }
+            console.log(this.loggedInUserId);
+        }
+    }
+
+    logOut() {
+        this.loggedInUserId = 0;
+    }
+
+    
 
     printUsers() {
         for (let i = 0; i < this.users.length; i++) {
@@ -35,5 +62,6 @@ export class Server {
 
 
 }
+
 
 

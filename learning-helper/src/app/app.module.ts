@@ -18,6 +18,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
+import { LoginComponent } from './header/login/login.component';
+import { UserComponent } from './header/user/user.component';
 
 
 
@@ -26,7 +28,9 @@ import { RegisterComponent } from './register/register.component';
     AppComponent,
     HeaderComponent,
     HomeComponent,
-    RegisterComponent
+    RegisterComponent,
+    LoginComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,

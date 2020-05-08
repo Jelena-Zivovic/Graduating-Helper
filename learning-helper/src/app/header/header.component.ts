@@ -11,17 +11,21 @@ export class HeaderComponent implements OnInit {
   
   
 
-  constructor(private authService : AuthenticationService) { }
+  constructor(private authService : AuthenticationService) {
+    
+  }
+
+  isUserLoggedIn() {
+    return this.authService.isUserLoggedIn();
+  }
 
   ngOnInit(): void {
   }
 
   loginHeader(data) {
-    this.authService.login(data);
+    console.log(data);
   }
 
-  register(data) {
-    
-  }
+  
 
 }

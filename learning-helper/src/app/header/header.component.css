@@ -23,7 +23,7 @@
     width: 800px;
     height: 100px;
     position: relative;
-    left: 400px;
+    left: 800px;
     bottom: 100px;
 }
 
@@ -39,14 +39,3 @@
     left: 350px;
 }
 
-#question {
-    position: relative;
-    left: 350px;
-    display:inline;
-}
-
-#registerButton {
-    position: relative;
-    display:inline;
-    left: 380px;
-}
