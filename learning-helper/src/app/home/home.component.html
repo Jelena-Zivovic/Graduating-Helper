@@ -1,9 +1,14 @@
 <mat-tab-group>
     <mat-tab label="Inspire yourself">
-        <mat-card>
-            <mat-card-content>{{randomQuote.quote}}</mat-card-content>
-            <mat-card-footer>{{randomQuote.author}}</mat-card-footer>
-        </mat-card>
+        <div id="quoteBox">
+            <q style="display: block;">
+                {{randomQuote.quote}}    
+            </q>
+            <cite style="font-size: 15px; float: right;">
+                {{randomQuote.author}}
+            </cite>
+        </div>
+        <button id="newQuoteButton" mat-raised-button color="primary" (click)="setNewQuote()">New random quote</button>
     </mat-tab>
     <mat-tab label="Learn more"> Content 2 </mat-tab>
     <mat-tab label="Help"> Content 3 </mat-tab>

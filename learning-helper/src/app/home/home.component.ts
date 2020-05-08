@@ -21,6 +21,10 @@ export class HomeComponent implements OnInit {
 
     return this.generator.getRandomQuote();
   }
+
+  setNewQuote() {
+    this.randomQuote = this.getQuote();
+  }
   
 
 }
