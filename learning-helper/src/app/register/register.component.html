@@ -1,0 +1,36 @@
+<h3>Register:</h3>
+<form  id="registerForm" #f="ngForm" (ngSubmit)="register(f.value)" >
+    <mat-form-field>
+        <mat-label>First name:</mat-label>
+        <input ngModel matInput  type="text" name="firstName">
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <mat-label>Last name:</mat-label>
+        <input ngModel matInput type="text" name="lastName">
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <mat-label>Username:</mat-label>
+        <input ngModel matInput type="text" name="username">
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <mat-label>Email:</mat-label>
+        <input ngModel matInput type="email" name="email">
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <mat-label>Password:</mat-label>
+        <input ngModel matInput type="password" name="password">
+
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <mat-label>Repeat password:</mat-label>
+        <input ngModel matInput type="password" name="repeatedPassword">
+    </mat-form-field>
+    <br>
+    <button ngModel mat-button type="submit" >Register</button>
+
+</form>

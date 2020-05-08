@@ -1,6 +1,6 @@
 <div id="mainContainerHeader">
     <div id="titleContainer">
-        <h1 id="titleHeader">Learning helper</h1>
+        <h1 id="titleHeader" [routerLink]="['/']">Learning helper</h1>
     </div>
     <div id="loginRegisterContainer">
         <form  id="formHeader" #formHeader="ngForm" (ngSubmit)="loginHeader(formHeader.value)" right>
@@ -17,6 +17,6 @@
         </form>
        
         <p id="question">Don't have an account?</p>
-        <button mat-button id="registerButton">Register</button>
+        <button mat-button id="registerButton" [routerLink]="['/register']">Register</button>
     </div>
 </div>
