@@ -10,6 +10,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatSidenavModule} from '@angular/material/sidenav'; 
 import {MatDividerModule} from '@angular/material/divider'; 
 import {MatTabsModule} from '@angular/material/tabs'; 
+import {MatCardModule} from '@angular/material/card'; 
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -37,7 +38,8 @@ import { RegisterComponent } from './register/register.component';
     FormsModule,
     MatSidenavModule,
     MatDividerModule,
-    MatTabsModule
+    MatTabsModule,
+    MatCardModule
   ],
   providers: [
     AuthenticationService,

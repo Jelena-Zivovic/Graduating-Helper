@@ -8,11 +8,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private generator: DataGeneratorService) { }
+  randomQuote;
+
+  constructor(private generator: DataGeneratorService) {
+    this.randomQuote = this.getQuote();
+  }
 
   ngOnInit(): void {
   }
 
+  getQuote() {
+
+    return this.generator.getRandomQuote();
+  }
   
 
 }
