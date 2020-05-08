@@ -20,4 +20,8 @@ export class HeaderComponent implements OnInit {
     this.authService.login(data);
   }
 
+  register(data) {
+    
+  }
+
 }

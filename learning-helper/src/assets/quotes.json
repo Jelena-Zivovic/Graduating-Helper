@@ -1,0 +1,52 @@
+[{
+    "id": 1,
+    "quote": "Science is organized knowledge. Wisdom is organized life.",
+    "author": "Immanuel Kant"
+
+},
+{
+    "id": 2,
+    "quote": "Only two thing are infinite, the universe and human stupidity, and I'm not sure about the former.",
+    "author": "Albert Einstein"
+},
+{
+    "id": 3,
+    "quote": "Science is nothing but perception.",
+    "author": "Plato"
+},
+{
+    "id": 4,
+    "quote": "Men love to wonder, and that is the seed of science.",
+    "author": "Ralph Waldo Emerson"
+},
+{
+    "id": 5,
+    "quote": "The human brain is and incredible pattern-matching machine.",
+    "author": "Jeff Bezos"
+},
+{
+    "id": 6,
+    "quote": "Learning is not attained by chance, it must be sought for with ardor and attended to with diligence.",
+    "author": "Abigail Adams"
+},
+{
+    "id": 7,
+    "quote": "Yesterday I was clever, so I changed the world. Today I am wise, so I am changing myself.",
+    "author": "Rumi"
+},
+{
+    "id": 8,
+    "quote": "Be curious, not judgmental.",
+    "author": "Walt Whitman"
+},
+{
+    "id": 9,
+    "quote": "You don't have to be great to start, but you have to start to be great.",
+    "author": "Zig Ziglar"
+},
+{
+    "id": 10,
+    "quote": "Be stubborn about your goals and flexible about your methods.",
+    "author": "unknown"
+}
+]
