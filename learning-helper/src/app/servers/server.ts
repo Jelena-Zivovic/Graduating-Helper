@@ -31,7 +31,8 @@ export class Server {
                 user.username,
                 user.email,
                 user.password
-            ))
+            ));
+            
        }
         
     }
@@ -41,27 +42,35 @@ export class Server {
             for (let i = 0; i < this.users.length; i++) {
                 if (this.users[i].username === user.username) {
                     this.loggedInUserId = this.users[i].id;
+                    localStorage.setItem("currentUser", user.username);
                     break;
                 }
             }
-            console.log(this.loggedInUserId);
+            
         }
     }
 
     logOut() {
         this.loggedInUserId = 0;
+        localStorage.removeItem("currentUser");
     }
 
     currentUser() {
-        for (let i = 0; i < this.users.length; i++) {
-            if (this.users[i].id === this.loggedInUserId) {
-                return this.users[i].username;
-            }
-        }
-
-        return "";
+        return localStorage.getItem("currentUser");
     }
 
+    getUserInfo(username: string) {
+        for (let i = 0; i < this.users.length; i++) {
+            if (this.users[i].username === username) {
+                return this.users[i];
+            }
+        }
+        return {};
+    }
+
+    getAllUsers() {
+        return this.users;
+    }
     
 
     printUsers() {

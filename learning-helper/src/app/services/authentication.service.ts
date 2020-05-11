@@ -37,5 +37,12 @@ export class AuthenticationService {
     this.server.logOut();
   }
 
+  getUserInfo(username: string) {
+    return this.server.getUserInfo(username);
+  }
+
+  getAllRegisteredUsers() {
+    return this.server.getAllUsers();
+  }
 
 }

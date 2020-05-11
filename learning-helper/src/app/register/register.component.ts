@@ -1,3 +1,4 @@
+import { SamePasswordsDirective } from './../directives/same-passwords.directive';
 import { AuthenticationService } from './../services/authentication.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
@@ -9,6 +10,7 @@ import { Router } from '@angular/router';
 })
 export class RegisterComponent implements OnInit {
 
+
   constructor(private authService: AuthenticationService, private router: Router ) { }
 
   ngOnInit(): void {
@@ -18,5 +20,7 @@ export class RegisterComponent implements OnInit {
     this.authService.register(data);
     this.router.navigate(["/"]);
   }
+
+ 
 
 }

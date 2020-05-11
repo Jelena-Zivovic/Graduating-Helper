@@ -2,7 +2,7 @@
 <form  id="registerForm" #f="ngForm" (ngSubmit)="register(f.value)" >
     <mat-form-field>
         <mat-label>First name:</mat-label>
-        <input ngModel matInput  type="text" name="firstName">
+        <input ngModel matInput type="text" name="firstName">
     </mat-form-field>
     <br>
     <mat-form-field>
@@ -12,8 +12,9 @@
     <br>
     <mat-form-field>
         <mat-label>Username:</mat-label>
-        <input ngModel matInput type="text" name="username">
+        <input ngModel matInput learnUniqueUsername type="text" name="username">
     </mat-form-field>
+    
     <br>
     <mat-form-field>
         <mat-label>Email:</mat-label>
@@ -22,15 +23,15 @@
     <br>
     <mat-form-field>
         <mat-label>Password:</mat-label>
-        <input ngModel matInput type="password" name="password">
+        <input ngModel matInput type="password" name="password" >
 
     </mat-form-field>
     <br>
     <mat-form-field>
         <mat-label>Repeat password:</mat-label>
-        <input ngModel matInput type="password" name="repeatedPassword">
+        <input ngModel matInput learnSamePasswords type="password" name="repeatedPassword">
     </mat-form-field>
     <br>
-    <button    mat-button type="submit"  >Register</button>
+    <button mat-button type="submit"  >Register</button>
 
 </form>

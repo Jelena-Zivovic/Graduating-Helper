@@ -22,6 +22,8 @@ import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './header/login/login.component';
 import { UserComponent } from './header/user/user.component';
 import { LearningComponent } from './learning/learning.component';
+import { SamePasswordsDirective } from './directives/same-passwords.directive';
+import { UniqueUsernameDirective } from './directives/unique-username.directive';
 
 
 
@@ -33,7 +35,9 @@ import { LearningComponent } from './learning/learning.component';
     RegisterComponent,
     LoginComponent,
     UserComponent,
-    LearningComponent
+    LearningComponent,
+    SamePasswordsDirective,
+    UniqueUsernameDirective
   ],
   imports: [
     BrowserModule,
@@ -51,7 +55,8 @@ import { LearningComponent } from './learning/learning.component';
   providers: [
     AuthenticationService,
     DataGeneratorService,
-    LearningGuardService
+    LearningGuardService,
+    UniqueUsernameDirective
   ],
   bootstrap: [AppComponent]
 })
