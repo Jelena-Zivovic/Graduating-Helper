@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { AuthenticationService } from './../../services/authentication.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -10,7 +11,7 @@ export class LoginComponent implements OnInit {
 
   private static isUserLogged: boolean = false;
 
-  constructor(private authService: AuthenticationService) { }
+  constructor(private authService: AuthenticationService, private router: Router) { }
 
   ngOnInit(): void {
     
@@ -19,6 +20,8 @@ export class LoginComponent implements OnInit {
   login(data) {
     LoginComponent.isUserLogged = true;
     this.authService.login(data);
+    this.router.navigate(["/learning"]);
+
   }
 
   static isUsedLoggedIn() {

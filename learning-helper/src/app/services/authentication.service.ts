@@ -33,6 +33,7 @@ export class AuthenticationService {
   }
 
   logout() {
+    
     this.server.logOut();
   }
 

@@ -1,3 +1,4 @@
+import { LearningGuardService } from './services/learning-guard.service';
 import { DataGeneratorService } from './services/data-generator.service';
 import { AuthenticationService } from './services/authentication.service';
 import { BrowserModule } from '@angular/platform-browser';
@@ -20,6 +21,7 @@ import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './header/login/login.component';
 import { UserComponent } from './header/user/user.component';
+import { LearningComponent } from './learning/learning.component';
 
 
 
@@ -30,7 +32,8 @@ import { UserComponent } from './header/user/user.component';
     HomeComponent,
     RegisterComponent,
     LoginComponent,
-    UserComponent
+    UserComponent,
+    LearningComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +50,8 @@ import { UserComponent } from './header/user/user.component';
   ],
   providers: [
     AuthenticationService,
-    DataGeneratorService
+    DataGeneratorService,
+    LearningGuardService
   ],
   bootstrap: [AppComponent]
 })
