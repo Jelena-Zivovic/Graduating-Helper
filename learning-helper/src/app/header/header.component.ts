@@ -1,3 +1,4 @@
+import { LoginComponent } from './login/login.component';
 import { AuthenticationService } from './../services/authentication.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -16,7 +17,8 @@ export class HeaderComponent implements OnInit {
   }
 
   isUserLoggedIn() {
-    return this.authService.isUserLoggedIn();
+    
+    return LoginComponent.isUsedLoggedIn();
   }
 
   ngOnInit(): void {

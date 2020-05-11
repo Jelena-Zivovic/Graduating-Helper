@@ -27,6 +27,14 @@
     bottom: 100px;
 }
 
+#userLoggedContainer {
+    width: 800px;
+    height: 100px;
+    position: relative;
+    left: 800px;
+    bottom: 100px;
+}
+
 #titleHeader {
     font-family: lobster;
     font-size: 50px;

@@ -28,6 +28,13 @@ export class AuthenticationService {
     return this.server.loggedInUserId !== 0;
   }
 
+  getCurrentUserUsername() {
+    return this.server.currentUser();
+  }
+
+  logout() {
+    this.server.logOut();
+  }
 
 
 }

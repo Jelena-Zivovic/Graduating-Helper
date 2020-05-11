@@ -52,6 +52,16 @@ export class Server {
         this.loggedInUserId = 0;
     }
 
+    currentUser() {
+        for (let i = 0; i < this.users.length; i++) {
+            if (this.users[i].id === this.loggedInUserId) {
+                return this.users[i].username;
+            }
+        }
+
+        return "";
+    }
+
     
 
     printUsers() {

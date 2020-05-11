@@ -1,4 +1,7 @@
+import { LoginComponent } from './../login/login.component';
+import { AuthenticationService } from './../../services/authentication.service';
 import { Component, OnInit } from '@angular/core';
+
 
 @Component({
   selector: 'learn-user',
@@ -7,9 +10,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserComponent implements OnInit {
 
-  constructor() { }
+  constructor(private authService: AuthenticationService) { }
 
   ngOnInit(): void {
+  }
+
+  getLoggedUserUsername() {
+    return this.authService.getCurrentUserUsername();
+  }
+
+  logout() {
+    this.authService.logout();
+    LoginComponent.logoutUser();
   }
 
 }
