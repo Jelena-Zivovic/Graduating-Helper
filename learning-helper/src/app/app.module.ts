@@ -4,6 +4,7 @@ import { AuthenticationService } from './services/authentication.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {FormsModule} from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import {MatInputModule} from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -50,7 +51,8 @@ import { UniqueUsernameDirective } from './directives/unique-username.directive'
     MatSidenavModule,
     MatDividerModule,
     MatTabsModule,
-    MatCardModule
+    MatCardModule,
+    HttpClientModule
   ],
   providers: [
     AuthenticationService,

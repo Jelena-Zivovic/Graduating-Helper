@@ -8,23 +8,38 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  randomQuote;
+  displayedQuote;
+  private quotes ;
 
   constructor(private generator: DataGeneratorService) {
-    this.randomQuote = this.getQuote();
+    
+    
+    this.displayedQuote = {
+      quote: "You don't have to be great to start, but you have to start to be great.",
+      author: "Zig Ziglar"
+
+    }
+    
   }
 
   ngOnInit(): void {
+    this.generator.getQuotesFromServer();
+    
+
   }
 
-  getQuote() {
-
-    return this.generator.getRandomQuote();
+  setDisplayedQuote() {
+    this.quotes = this.generator.getQuotes();
+    let randomIndex = Math.floor(Math.random() * this.quotes.length) + 1;
+    let chosenQuote = this.quotes[randomIndex];
+    this.displayedQuote = {
+      quote: chosenQuote.text,
+      author: chosenQuote.author
+    };
   }
 
-  setNewQuote() {
-    this.randomQuote = this.getQuote();
-  }
+  
+
   
 
 }
