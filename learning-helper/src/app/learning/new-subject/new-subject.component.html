@@ -5,13 +5,14 @@
             <form [formGroup]="basicInfoGroup"  >
                 <mat-form-field>
                     <mat-label>Subject name</mat-label>
-                    <input matInput formControlName="subjectName" type="text">
+                    <input matInput formControlName="subjectName" type="text" >
+                    <mat-error>Subject name is required</mat-error>
                 </mat-form-field>
                 <br>
                 <mat-form-field>
                     <mat-label>Exam date</mat-label>
-                    <input matInput formControlName="examDate" type="date">
-                    
+                    <input matInput formControlName="examDate" type="date" >
+                    <mat-error *ngIf="checkExamDate()">Exam date is invalid</mat-error>
                 </mat-form-field>
                 <div>
                     <button mat-button matStepperNext>Next</button>
@@ -23,19 +24,21 @@
             <form [formGroup]="complexityGroup">
                 
                 <mat-label>Type of an exam:</mat-label><br>
-                <mat-radio-group formControlName="typeOfExam" area-label="Type of exam">
-                    <mat-radio-button value="theoretical" >Theoretical</mat-radio-button><br>
+                <mat-radio-group formControlName="typeOfExam" area-label="Type of exam" >
+                    <mat-radio-button value="theoretical" [checked]="true">Theoretical</mat-radio-button><br>
                     <mat-radio-button value="practical" >Practical</mat-radio-button><br>
                     <mat-radio-button value="mix" >Mix</mat-radio-button>
                 </mat-radio-group>
+                
                 <br><br>
                 <mat-form-field>
                     <mat-label>Complexity</mat-label>
-                    <mat-select formControlName="complexityLevel">
+                    <mat-select formControlName="complexityLevel" >
                         <mat-option value="easy">Easy</mat-option>
                         <mat-option value="somewhatHard">Somewhat hard</mat-option>
                         <mat-option value="hard">Hard</mat-option>
                     </mat-select>
+                    <mat-error>Complexity is required</mat-error>
                 </mat-form-field>
                 <div>
                     <button mat-button matStepperPrevious>Back</button>
@@ -48,13 +51,36 @@
             <form [formGroup]="materialInfoGroup">
                 <mat-form-field>
                     <mat-label>Type of material</mat-label>
-                    <mat-select formControlName="materialType">
+                    <mat-select formControlName="materialType" >
                         <mat-option value="book">Book</mat-option>
                         <mat-option value="videoLessons">Video lessons</mat-option>
                         <mat-option value="presentations">Presentations</mat-option>
                         <mat-option value="lectures">Lectures</mat-option>
                     </mat-select>
+                    <mat-error>Type of material is required</mat-error>
                 </mat-form-field>
+                <br>
+               <mat-form-field *ngIf="getMaterialType() === 'book'">
+                    <mat-label>Number of pages</mat-label>
+                    <input matInput type="number" formControlName="quantityOfMaterial" >
+                    <mat-error>Number of pages is required</mat-error>
+               </mat-form-field>
+               <mat-form-field *ngIf="getMaterialType() === 'videoLessons'">
+                    <mat-label>Number of video lessons</mat-label>
+                    <input matInput type="number" formControlName="quantityOfMaterial" >
+                    <mat-error>Number of video lessons is required</mat-error>
+                </mat-form-field>
+                <mat-form-field *ngIf="getMaterialType() === 'presentations'">
+                    <mat-label>Number of presentations</mat-label>
+                    <input matInput type="number" formControlName="quantityOfMaterial" >
+                    <mat-error>Number of presentations is required</mat-error>
+                </mat-form-field>
+                <mat-form-field *ngIf="getMaterialType() === 'lectures'">
+                    <mat-label>Number of lectures</mat-label>
+                    <input matInput type="number" formControlName="quantityOfMaterial" >
+                    <mat-error>Number of lectures is required</mat-error>
+                </mat-form-field>
+              
                 <div>
                     <button mat-button matStepperPrevious>Back</button>
                 </div>

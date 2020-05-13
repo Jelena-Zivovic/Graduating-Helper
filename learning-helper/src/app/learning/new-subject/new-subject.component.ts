@@ -1,5 +1,6 @@
+import { ExamDateValidators } from './exam-date.validators';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'learn-new-subject',
@@ -9,17 +10,18 @@ import { FormGroup, FormControl } from '@angular/forms';
 export class NewSubjectComponent implements OnInit {
 
   basicInfoGroup = new FormGroup({
-    subjectName: new FormControl(),
-    examDate: new FormControl()
+    subjectName: new FormControl('', [Validators.required]),
+    examDate: new FormControl('', [Validators.required, ExamDateValidators.validDate])
   });
 
   complexityGroup = new FormGroup({
-    typeOfExam: new FormControl(),
-    complexityLevel: new FormControl()
+    typeOfExam: new FormControl('', [Validators.required]),
+    complexityLevel: new FormControl('', [Validators.required])
   });
 
   materialInfoGroup = new FormGroup({
-    materialType: new FormControl()
+    materialType: new FormControl('', [Validators.required]),
+    quantityOfMaterial: new FormControl('', [Validators.required])
   });
 
   form = new FormGroup({
@@ -35,9 +37,30 @@ export class NewSubjectComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  getMaterialType() {
+    return this.form.get('materialInfoGroup').get('materialType').value;
+  }
+
+  checkExamDate() {
+    let examDate = new Date(this.form.get('basicInfoGroup').get('examDate').value);
+    let now = new Date();
+    return now < examDate;
+  }
+
+  isFormCorrect() {
+    return !this.form.get('basicInfoGroup').invalid &&
+            !this.form.get('complexityGroup').invalid &&
+            !this.form.get('materialInfoGroup').invalid;
+  }
+
   submit() {
-    console.log(this.form.get('basicInfoGroup').get('subjectName').value);
-    console.log(this.form.get('basicInfoGroup').get('examDate').value);
+    if (!this.isFormCorrect()) {
+      console.log('form is invalid');
+    }
+    else {
+      console.log('form is valid');
+    }
+    
 
   }
 
