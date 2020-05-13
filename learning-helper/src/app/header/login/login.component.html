@@ -1,12 +1,18 @@
 <div id="loginRegisterContainer">
-    <form   id="formHeader" #f="ngForm" (ngSubmit)="login(f.value)" right>
+    <form   id="formHeader" [formGroup]="form" (ngSubmit)="login(form.value)" right>
         <mat-form-field>
             <mat-label>username</mat-label>
-            <input ngModel matInput  type="text" name="username">
+            <input matInput  
+                   type="text" 
+                   formControlName="username">
+            <mat-error>Username is required</mat-error>
         </mat-form-field>
         <mat-form-field>
             <mat-label>password</mat-label>
-            <input ngModel matInput type="password" name="password">
+            <input matInput 
+                   type="password" 
+                   formControlName="password">
+            <mat-error>Password is required</mat-error>
         </mat-form-field>
         <button mat-button type="submit" >Sign in</button>
     
