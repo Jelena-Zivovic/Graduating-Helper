@@ -45,12 +45,14 @@
     <br>
     <mat-form-field>
         <mat-label>Repeat password:</mat-label>
-        <input matInput 
-               learnSamePasswords 
+        <input learnSamePasswords
+               [enteredPassword]="registerForm.get('password').value"
+               matInput 
                type="password" 
-               name="repeatedPassword"
-               required>
+               formControlName="repeatedPassword">
         <mat-error>Please repeat your password</mat-error>
+        <p id="errorPasswords"></p>
+
     </mat-form-field>
     <br>
     <button mat-button type="submit"  >Register</button>
