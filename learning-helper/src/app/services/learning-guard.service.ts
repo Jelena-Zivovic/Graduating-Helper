@@ -13,7 +13,7 @@ export class LearningGuardService implements CanActivate {
 
 
   canActivate() {
-    if (LoginComponent.isUsedLoggedIn()) {
+    if (this.authService.isUserLoggedIn()) {
       return true;
     }
     this.router.navigate(["/"]);

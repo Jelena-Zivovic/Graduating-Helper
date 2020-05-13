@@ -1,15 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import * as data from '../../assets/quotes.json';
-import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataGeneratorService {
 
-  //quotes = [];
   private url = 'https://type.fit/api/quotes';
   private options = {
     headers: new HttpHeaders({
@@ -19,7 +16,6 @@ export class DataGeneratorService {
   private quotes;
 
   constructor(private http: HttpClient) {
-    
     
   }
 

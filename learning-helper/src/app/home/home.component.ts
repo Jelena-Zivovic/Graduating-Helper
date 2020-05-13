@@ -1,5 +1,7 @@
+import { AuthenticationService } from './../services/authentication.service';
 import { DataGeneratorService } from './../services/data-generator.service';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'learn-home',
@@ -11,7 +13,9 @@ export class HomeComponent implements OnInit {
   displayedQuote;
   private quotes ;
 
-  constructor(private generator: DataGeneratorService) {
+  constructor(private generator: DataGeneratorService,
+              private authService: AuthenticationService,
+              private router: Router) {
     
     
     this.displayedQuote = {
@@ -26,6 +30,14 @@ export class HomeComponent implements OnInit {
     this.generator.getQuotesFromServer();
     
 
+  }
+
+  isUserLoggedIn() {
+    return this.authService.isUserLoggedIn();
+  }
+
+  userIsReadyForLearning() {
+    this.router.navigate(['/learning']);
   }
 
   setDisplayedQuote() {
