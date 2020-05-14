@@ -18,15 +18,13 @@ export class HeaderComponent implements OnInit {
 
   isUserLoggedIn() {
     
-    return LoginComponent.isUsedLoggedIn();
+    return this.authService.isUserLoggedIn();
   }
 
   ngOnInit(): void {
   }
 
-  loginHeader(data) {
-    console.log(data);
-  }
+  
 
   
 

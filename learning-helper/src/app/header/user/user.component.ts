@@ -23,7 +23,7 @@ export class UserComponent implements OnInit {
   logout() {
     this.authService.logout();
     this.router.navigate(["/"]);
-    LoginComponent.logoutUser();
+    this.authService.logout();
   }
 
 }

@@ -10,7 +10,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  private static isUserLogged: boolean = false;
+  isUserLogged: boolean = false;
 
   form = new FormGroup({
     username: new FormControl('', [Validators.required]), 
@@ -24,19 +24,30 @@ export class LoginComponent implements OnInit {
   }
 
   login(data) {
-    LoginComponent.isUserLogged = true;
-    this.authService.login(data);
-    this.router.navigate(["/learning"]);
-    console.log(data);
+   
+    
 
+    //from here
+    this.authService.login(data).subscribe(ret => {
+      if (!ret) {
+        console.log("user is not registered");
+        this.isUserLogged = false;
+      }
+      else {
+        this.isUserLogged = true;
+        this.router.navigate(["/learning"]);
+        localStorage.setItem("username", ret.username);
+      }
+
+    });
   }
 
-  static isUsedLoggedIn() {
-    return LoginComponent.isUserLogged;
+  isUsedLoggedIn() {
+    return this.authService.isUserLoggedIn();
   }
 
-  static logoutUser() {
-    LoginComponent.isUserLogged = false;
+  logoutUser() {
+    this.authService.logout();
   }
 
 }

@@ -1,6 +1,16 @@
+import { HttpClient } from '@angular/common/http';
 import { Server } from './../servers/server';
 import { Injectable } from '@angular/core';
+import {server} from '../../../../backend/server.js';
+import { Observable } from 'rxjs';
 
+export interface User {
+  firstName: string,
+  lastName: string,
+  username: string,
+  email: string,
+  password: string
+}
 
 @Injectable({
   providedIn: 'root'
@@ -8,32 +18,39 @@ import { Injectable } from '@angular/core';
 export class AuthenticationService {
   server: Server;
 
-  constructor() {
+  constructor(private http: HttpClient) {
     this.server = new Server();
   }
 
-  login(user: {username: string, password: string}) {
-    if (this.server.checkIfUserIsRegistered(user)) {
-      this.server.signIn(user);
-    }
+  getAllUsers(): Observable<User[]> {
+    return this.http.get<User[]>('http://localhost:3000/api/users');
   }
 
-  register(user: {firstName: string, lastName: string, username: string, email: string, password: string}) {
+  login(user: {username: string, password: string}) : Observable<User> {
+    //from here
+    return this.http.get<User>('http://localhost:3000/api/users/' + user.username);
+  }
+
+  register(user: {firstName: string, lastName: string, username: string, email: string, password: string}) : Observable<User>{
     this.server.registerUser(user);
-    console.log("registrovan!");
-    this.server.printUsers();
+    return this.http.post<User>('http://localhost:3000/api/users', user);
   }
 
   isUserLoggedIn() {
-    return this.server.loggedInUserId !== 0;
+    if (localStorage.length === 0) {
+      return false;
+    }
+    else {
+      return true;
+    }
   }
 
   getCurrentUserUsername() {
-    return this.server.currentUser();
+    return localStorage.getItem('username');
   }
 
   logout() {
-    
+    localStorage.clear();
     this.server.logOut();
   }
 

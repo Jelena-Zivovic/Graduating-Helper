@@ -26,7 +26,9 @@ export class RegisterComponent implements OnInit {
   }
 
   register(data) {
-    this.authService.register(data);
+    this.authService.register(data).subscribe(v => {
+      console.log(v);
+    });
     this.router.navigate(["/"]);
   }
 
