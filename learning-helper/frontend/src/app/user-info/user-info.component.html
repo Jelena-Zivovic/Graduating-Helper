@@ -33,7 +33,14 @@
             </tr>
         </thead>
         <tbody>
-            
+            <tr *ngFor="let subject of userSubjects">
+                <td> {{subject.subjectName}} </td>
+                <td> {{subject.examDate}} </td>
+                <td> {{subject.typeOfExam}} </td>
+                <td> {{subject.materialType}} </td>
+                <td> {{subject.quantityOfMaterial}} </td>
+                <td> {{subject.daysUntilExam}} </td>
+            </tr>
         </tbody>
     </table>
     

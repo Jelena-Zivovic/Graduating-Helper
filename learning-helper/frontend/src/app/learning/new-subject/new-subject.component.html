@@ -88,5 +88,7 @@
         </mat-step>
     
     </mat-vertical-stepper>
-    <button mat-button type="submit">Submit</button>
+    <button mat-button 
+            type="submit"
+            [disabled]="isFormCorrect() ? false : true">Submit</button>
 </form>

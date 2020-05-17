@@ -1,6 +1,7 @@
 import { AuthenticationService } from './../services/authentication.service';
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { OrganizerService } from '../services/organizer.service';
 
 @Component({
   selector: 'learn-user-info',
@@ -16,9 +17,13 @@ export class UserInfoComponent implements OnInit {
     email: ""
   };
 
-  private subUserInfo: Subscription;
+  userSubjects = [];
 
-  constructor(private authService: AuthenticationService) { }
+  private subUserInfo: Subscription;
+  private subUserSubjects: Subscription;
+
+  constructor(private authService: AuthenticationService,
+              private organizerService: OrganizerService) { }
 
   ngOnInit(): void {
     this.subUserInfo = this.authService.getUserInfo(localStorage.getItem('username')).subscribe(ret => {
@@ -28,6 +33,23 @@ export class UserInfoComponent implements OnInit {
         username: ret.username,
         email: ret.email
       }
+    });
+
+    this.subUserSubjects = this.organizerService.getUserSubjects(localStorage.getItem('username')).subscribe(ret => {
+      if (ret !== null) {
+        let len = (ret as Object[]).length;
+        for (let i = 1; i < len; i++) {
+          this.userSubjects.push({
+            subjectName: ret[i].subjectName,
+            examdate: ret[i].examDate,
+            typeOfExam: ret[i].typeOfExam,
+            materialType: ret[i].materialType,
+            quantityOfMaterial: ret[i].quantityOfMaterial,
+            daysUntilExam: this.organizerService.calculateDaysUntilExam(ret[i].examDate)
+          });
+        }
+      }
+      
     });
   }
 
@@ -48,6 +70,7 @@ export class UserInfoComponent implements OnInit {
 
   ngOnDestroy() {
     this.subUserInfo.unsubscribe();
+    this.subUserSubjects.unsubscribe();
   }
 
 }

@@ -1,6 +1,7 @@
 import { ExamDateValidators } from './exam-date.validators';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { OrganizerService } from 'src/app/services/organizer.service';
 
 @Component({
   selector: 'learn-new-subject',
@@ -30,7 +31,7 @@ export class NewSubjectComponent implements OnInit {
     materialInfoGroup: this.materialInfoGroup
   });
 
-  constructor() {
+  constructor(private organizerService: OrganizerService) {
     
   }
 
@@ -50,16 +51,29 @@ export class NewSubjectComponent implements OnInit {
   isFormCorrect() {
     return !this.form.get('basicInfoGroup').invalid &&
             !this.form.get('complexityGroup').invalid &&
-            !this.form.get('materialInfoGroup').invalid;
+            !this.form.get('materialInfoGroup').invalid &&
+            ExamDateValidators.isExamDateValid;
   }
 
   submit() {
-    if (!this.isFormCorrect()) {
-      console.log('form is invalid');
-    }
-    else {
-      console.log('form is valid');
-    }
+    let subject = {
+      subjectName: this.form.get('basicInfoGroup').get('subjectName').value,
+      examDate: this.form.get('basicInfoGroup').get('examDate').value,
+      typeOfExam: this.form.get('complexityGroup').get('typeOfExam').value,
+      complexityLevel: this.form.get('complexityGroup').get('complexityLevel').value,
+      materialType: this.form.get('materialInfoGroup').get('materialType').value,
+      quantityOfMaterial: this.form.get('materialInfoGroup').get('quantityOfMaterial').value
+
+    };
+    this.organizerService.addSubjectForUser(localStorage.getItem('username'), subject).subscribe(ret => {
+      
+      if (ret === null) {
+        alert('Subject already exists.');
+      }
+      else {
+        console.log('Subject is entered.');
+      }
+    });
     
 
   }
