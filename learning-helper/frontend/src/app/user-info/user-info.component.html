@@ -1,0 +1,40 @@
+
+<div id="userInfo">
+    <p class="user"><b>User info:</b></p>
+    <mat-divider></mat-divider>
+    <p class="user"><i>First name:</i> {{userInfo.firstName}} </p>
+    <p class="user"><i>Last name:</i> {{userInfo.lastName}} </p>
+    <p class="user"><i>Username:</i> {{userInfo.username}} </p>
+    <p class="user"><i>Email:</i> {{userInfo.email}} </p>
+    <button mat-button 
+            (click)="changeData()" 
+            class="userButtons">
+        Change data
+    </button>
+    <button mat-button 
+            (click)="deleteAccount()" 
+            class="userButtons">
+        Delete account
+    </button>
+    </div>
+    <mat-divider [vertical]="true" id="divider"></mat-divider>
+    <div id="userSubjects">
+    <p class="subjects"><b>User's subjects:</b></p>
+    <mat-divider></mat-divider>
+    <table class="subjects" class="table table-hover">
+        <thead>
+            <tr>
+                <th>Subject name</th>
+                <th>Exam date</th>
+                <th>Type of exam</th>
+                <th>Material type</th>
+                <th>Quantity of material</th>
+                <th>Days until exam</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+        </tbody>
+    </table>
+    
+    </div>

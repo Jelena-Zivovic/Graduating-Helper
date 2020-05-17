@@ -1,0 +1,15 @@
+[
+    {
+        "username": "jela",
+        "subjects": [
+            {
+                "subjectName": "Racunarska inteligencija",
+                "examDate": "20-06-2020",
+                "typeOfExam": "theoretical",
+                "complexityLevel": "easy",
+                "materialType": "book",
+                "quantityOfMaterial": 300
+            }
+        ]
+    }
+]

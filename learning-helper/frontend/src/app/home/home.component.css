@@ -1,0 +1,23 @@
+#quoteBox {
+    position: relative;
+    top: 50px;
+    left: 50px;
+    display: inline-block;
+    width: 400px;
+    height: 250px;
+    font-size: 20px;
+    color: indigo;
+}
+
+#newQuoteButton {
+    position: absolute;
+    top: 50px;
+    left: 500px;
+}
+
+#containerReadyForLearning {
+    text-align: center;
+}
+
+
+
