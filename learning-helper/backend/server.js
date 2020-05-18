@@ -8,7 +8,7 @@ const subjects = require('./subjects.json');
 
 let corsOptions = {
     origin: 'http://localhost:4200',
-    optionsSuccessStatus: 200 
+    optionsSuccessStatus: 200
 };
 
 const app = express();
@@ -201,7 +201,6 @@ app.route('/api/subjects/:username').get((request, response) => {
 });
 
 app.route('/api/subjects/:username/:id').get((request, response) => {
-    console.log(request.params);
     response.send(getSubject(request.params['username'], Number(request.params['id'])));
 })
 
@@ -209,8 +208,8 @@ app.route('/api/subjects/:username').post((request, response) => {
     response.send(addSubjectForUser(request.params['username'], request.body));
 });
 
-app.route('/api/subjects/:username').put((request, response) => {
-    let id = request.body.id;
+app.route('/api/subjects/:username/:id').put((request, response) => {
+    let id = Number(request.params['id']);
     let progress = request.body.progress;
     changeProgress(request.params['username'], id, progress);
     response.status(200);

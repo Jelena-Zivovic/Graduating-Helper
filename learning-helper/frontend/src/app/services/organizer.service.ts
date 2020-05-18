@@ -33,6 +33,10 @@ export class OrganizerService {
     return Math.floor((exam.getTime() - now.getTime()) / (24*60*60*1000));
   }
 
+  updateSubject(username, id, progress) {
+    return this.http.put('http://localhost:3000/api/subjects/' + username + '/' + id, progress);
+  }
+
   organizeSubjectForToday(subject) {
     let daysUntilExam = this.calculateDaysUntilExam(subject.examDate);
     let daysForRepeating = 0;

@@ -1,4 +1,3 @@
-import { Subject } from './../../services/organizer.service';
 import { Subscription } from 'rxjs';
 import { OrganizerService } from 'src/app/services/organizer.service';
 import { Component, OnInit } from '@angular/core';
@@ -28,7 +27,7 @@ export class OrganizeDayComponent implements OnInit {
         for (let i = 0; i < this.subjectsForToday.length; i++) {
           this.planForTodayAllSubjects.push(this.organizerService.organizeSubjectForToday(this.subjectsForToday[i]));
         }
-        console.log(this.planForToday);
+        
     });
   }
 
@@ -45,17 +44,17 @@ export class OrganizeDayComponent implements OnInit {
     this.isSelected = true;
     
     for (let i = 0; i < data.length; i++) {
-      this.organizerService.getSubject(data[i]).subscribe(ret =>{
-        if (ret !== null) {
-          this.planForToday.push({
-            subjectName: (ret as Subject).subjectName,
-            materialType: (ret as Subject).materialType,
-            typeOfExam: (ret as Subject).typeOfExam,
-            materialForToday: this.getMaterialForToday((ret as Subject).id)
-
-          });
-        }
-      });
+      let id = Number(data[i]);
+      let found = this.subjectsForToday.find(s => s.id === this.planForTodayAllSubjects[i].id);
+      if (found !== undefined) {
+        this.planForToday.push({
+          id: id,
+          subjectName: found.subjectName,
+          materialForToday: this.planForTodayAllSubjects[i].quantity,
+          materialType: found.materialType,
+          typeOfExam: found.typeOfExam
+        });
+      }
     }
 
   }
@@ -95,6 +94,18 @@ export class OrganizeDayComponent implements OnInit {
 
       }
     }
+  }
+
+  subjectDone(id, quantity) {
+    
+    //TODO: row from the table must dissapear
+
+    this.organizerService.updateSubject(localStorage.getItem('username'), Number(id), Number(quantity))
+          .subscribe(ret => {
+            console.log(ret);
+          });
+
+
   }
 
   ngOnDestroy() {
