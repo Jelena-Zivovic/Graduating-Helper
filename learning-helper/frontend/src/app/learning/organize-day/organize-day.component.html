@@ -1,0 +1,26 @@
+
+<div *ngIf="!isSelected">
+    <p id="instruction">
+        Please choose at least one assignment for today:
+    </p>
+    <mat-selection-list id="listOfSubjects"
+                        #subjects>
+        <mat-list-option *ngFor="let subject of subjectsForToday" 
+                         value="{{subject.id}}"> 
+                {{subject.subjectName}}
+        </mat-list-option>
+    
+    </mat-selection-list>
+    <br>
+    <button mat-button 
+            (click)="submit(subjects._value)">
+        Organize
+    </button>
+</div>
+<div *ngIf="isSelected">
+    This is the plan for today:
+    <button mat-button 
+            (click)="backToOrganization()">
+        Back to organization
+    </button>
+</div>

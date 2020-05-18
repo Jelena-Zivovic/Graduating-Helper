@@ -8,7 +8,7 @@ const subjects = require('./subjects.json');
 
 let corsOptions = {
     origin: 'http://localhost:4200',
-    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204 
+    optionsSuccessStatus: 200 
 };
 
 const app = express();
@@ -110,7 +110,19 @@ function addSubjectForUser(username, subject) {
                     return null;
                 }
             }
-            subjects[i].subjects.push(subject);
+            let id = subjects[i].subjects.length + 1;
+
+            subjects[i].subjects.push(
+                {
+                    id: id,
+                    subjectName: subject.subjectName,
+                    examDate: subject.examDate,
+                    typeOfExam: subject.typeOfExam,
+                    complexityLevel: subject.complexityLevel,
+                    materialType: subject.materialType,
+                    quantityOfMaterial: subject.quantityOfMaterial
+                }
+            );
             fs.writeFile('subjects.json', JSON.stringify(subjects), () => {
 
             });

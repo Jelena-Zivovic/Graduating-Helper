@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 export interface Subject {
+  id: number,
   subjectName: string,
   examDate: string,
   typeOfExam: string,

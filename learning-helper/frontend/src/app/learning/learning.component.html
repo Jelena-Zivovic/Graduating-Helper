@@ -2,7 +2,9 @@
     <mat-tab label="Prepare an exam">
         <learn-new-subject></learn-new-subject>
     </mat-tab>
-    <mat-tab label="Organize your day"> Content 2 </mat-tab>
+    <mat-tab label="Organize your day"> 
+        <learn-organize-day></learn-organize-day>
+    </mat-tab>
     <mat-tab *ngIf="isUserLoggedIn()" label="Account">
         <learn-user-info></learn-user-info>
     </mat-tab>

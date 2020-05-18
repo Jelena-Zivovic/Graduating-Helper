@@ -1,0 +1,10 @@
+#listOfSubjects {
+    width: 600px;
+}
+
+#instruction {
+    padding-top: 10px;
+    padding-left: 10px;
+    font-size: medium;
+    font-weight: bold;
+}

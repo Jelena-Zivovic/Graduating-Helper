@@ -18,7 +18,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatSelectModule } from '@angular/material/select'; 
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatRadioModule } from '@angular/material/radio';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatListModule } from '@angular/material/list';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -34,6 +34,7 @@ import { SamePasswordsDirective } from './directives/same-passwords.directive';
 import { UniqueUsernameDirective } from './directives/unique-username.directive';
 import { NewSubjectComponent } from './learning/new-subject/new-subject.component';
 import { UserInfoComponent } from './user-info/user-info.component';
+import { OrganizeDayComponent } from './learning/organize-day/organize-day.component';
 
 
 
@@ -49,7 +50,8 @@ import { UserInfoComponent } from './user-info/user-info.component';
     SamePasswordsDirective,
     UniqueUsernameDirective,
     NewSubjectComponent,
-    UserInfoComponent
+    UserInfoComponent,
+    OrganizeDayComponent
   ],
   imports: [
     BrowserModule,
@@ -69,7 +71,7 @@ import { UserInfoComponent } from './user-info/user-info.component';
     ReactiveFormsModule,
     MatDatepickerModule,
     MatRadioModule,
-    MatDialogModule
+    MatListModule
   ],
   providers: [
     AuthenticationService,
