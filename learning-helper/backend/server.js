@@ -120,7 +120,8 @@ function addSubjectForUser(username, subject) {
                     typeOfExam: subject.typeOfExam,
                     complexityLevel: subject.complexityLevel,
                     materialType: subject.materialType,
-                    quantityOfMaterial: subject.quantityOfMaterial
+                    quantityOfMaterial: subject.quantityOfMaterial,
+                    progress: 0
                 }
             );
             fs.writeFile('subjects.json', JSON.stringify(subjects), () => {
@@ -131,6 +132,32 @@ function addSubjectForUser(username, subject) {
         }
     }
 }
+
+function changeProgress(username, idSubject, progressMade) {
+    for (let i = 0; i < subjects.length; i++) {
+        if (username === subjects[i].username) {
+            for (let j = 0; j < subjects[i].subjects.length; j++) {
+                if (idSubject === subjects[i].subjects[j]) {
+                    subjects[i].subjects[j].progress += progressMade;
+                    return;
+                }
+            }
+        }
+    }
+}
+
+function getSubject(username, id) {
+    for (let i = 0; i < subjects.length; i++) {
+        if (username === subjects[i].username) {
+            for (let j = 0; j < subjects[i].subjects.length; j++) {
+                if (id === subjects[i].subjects[j]) {
+                    return subjects[i].subjects[j];
+                }
+            }
+        }
+    }
+}
+
 
 
 app.route('/api/users').get((request, response) => {
@@ -173,8 +200,20 @@ app.route('/api/subjects/:username').get((request, response) => {
     response.send(getSubjectsForUser(request.params['username']));
 });
 
+app.route('/api/subjects/:username/:id').get((request, response) => {
+    console.log(request.params);
+    response.send(getSubject(request.params['username'], Number(request.params['id'])));
+})
+
 app.route('/api/subjects/:username').post((request, response) => {
     response.send(addSubjectForUser(request.params['username'], request.body));
+});
+
+app.route('/api/subjects/:username').put((request, response) => {
+    let id = request.body.id;
+    let progress = request.body.progress;
+    changeProgress(request.params['username'], id, progress);
+    response.status(200);
 });
 
 app.listen(3000, () => {

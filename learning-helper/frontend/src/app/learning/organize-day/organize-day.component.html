@@ -1,25 +1,53 @@
 
 <div *ngIf="!isSelected">
-    <p id="instruction">
+    <p class="message">
         Please choose at least one assignment for today:
     </p>
+    <mat-divider></mat-divider>
     <mat-selection-list id="listOfSubjects"
                         #subjects>
         <mat-list-option *ngFor="let subject of subjectsForToday" 
                          value="{{subject.id}}"> 
-                {{subject.subjectName}}
+                {{subject.subjectName}}, {{getQuantityForTodayMessage(subject.id)}}
         </mat-list-option>
     
     </mat-selection-list>
     <br>
-    <button mat-button 
+    <mat-divider></mat-divider>
+    <br>
+    <button mat-raised-button 
+            color="primary"
             (click)="submit(subjects._value)">
         Organize
     </button>
 </div>
 <div *ngIf="isSelected">
-    This is the plan for today:
-    <button mat-button 
+    <p class="message">This is the plan for today:</p>
+    <mat-divider></mat-divider>
+    <table class="table table-hover">
+        <thead>
+            <th>Subject name</th>
+            <th>Material for today</th>
+            <th>Material type</th>
+            <th>Type of exam</th>
+            <th></th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let subject of planForToday">
+                <td> {{subject.subjectName}} </td>
+                <td> {{subject.materialForToday}} </td>
+                <td> {{subject.materialType}} </td>
+                <td> {{subject.typeOfExam}} </td>
+                <td> <button mat-button>Done</button> </td>
+            </tr>
+        </tbody>
+
+    </table>
+    <br>
+    <mat-divider></mat-divider>
+    <br>
+    <button mat-raised-button 
+            color="primary"
             (click)="backToOrganization()">
         Back to organization
     </button>

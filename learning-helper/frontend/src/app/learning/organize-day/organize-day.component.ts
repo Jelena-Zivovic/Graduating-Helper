@@ -1,3 +1,4 @@
+import { Subject } from './../../services/organizer.service';
 import { Subscription } from 'rxjs';
 import { OrganizerService } from 'src/app/services/organizer.service';
 import { Component, OnInit } from '@angular/core';
@@ -10,7 +11,10 @@ import { Component, OnInit } from '@angular/core';
 export class OrganizeDayComponent implements OnInit {
 
   subjectsForToday =  [];
-  isSelected = false;
+  isSelected = localStorage.getItem('enteredPlan')  === 'true' ? true : false;
+  planForTodayAllSubjects = [];
+  planForToday = [];
+  
 
   private subSubjects: Subscription;
 
@@ -20,24 +24,77 @@ export class OrganizeDayComponent implements OnInit {
     this.subSubjects = this.organizerService.getUserSubjects(localStorage.getItem('username'))
         .subscribe(ret => {
         this.subjectsForToday = (ret as []);
-        console.log(this.subjectsForToday);
+
+        for (let i = 0; i < this.subjectsForToday.length; i++) {
+          this.planForTodayAllSubjects.push(this.organizerService.organizeSubjectForToday(this.subjectsForToday[i]));
+        }
+        console.log(this.planForToday);
     });
   }
 
-  today() {
-    let now = new Date();
-    return now.getDate().toString() + '.' + 
-           (now.getMonth() + 1).toString() + '.' + 
-           now.getFullYear().toString() + '.';
+  getMaterialForToday(id) {
+    for (let i = 0; i < this.planForTodayAllSubjects.length; i++) {
+      if (id === this.planForTodayAllSubjects[i].id) {
+        return this.planForTodayAllSubjects[i].quantity;
+      }
+    }
   }
 
   submit(data) {
-    console.log(data);
+    localStorage.setItem('enteredPlan', 'true');
     this.isSelected = true;
+    
+    for (let i = 0; i < data.length; i++) {
+      this.organizerService.getSubject(data[i]).subscribe(ret =>{
+        if (ret !== null) {
+          this.planForToday.push({
+            subjectName: (ret as Subject).subjectName,
+            materialType: (ret as Subject).materialType,
+            typeOfExam: (ret as Subject).typeOfExam,
+            materialForToday: this.getMaterialForToday((ret as Subject).id)
+
+          });
+        }
+      });
+    }
+
   }
 
   backToOrganization() {
     this.isSelected = false;
+  }
+
+  getQuantityForTodayMessage(id) {
+    
+
+    for (let i = 0; i < this.planForTodayAllSubjects.length; i++) {
+      if (id === this.planForTodayAllSubjects[i].id) {
+        
+        let material = "";
+        if (this.planForTodayAllSubjects[i].materialType === 'book') {
+          material = this.planForTodayAllSubjects[i].quantity.toString() + " pages"
+        }
+        else if (this.planForTodayAllSubjects[i].materialType === 'videoLessons') {
+          material = this.planForTodayAllSubjects[i].quantity.toString() + 
+            (this.planForTodayAllSubjects[i].quantity === 1 ? " video lesson" : " video lessons");
+        }
+        else if (this.planForTodayAllSubjects[i].materialType === 'presentations') {
+          material = this.planForTodayAllSubjects[i].quantity.toString() + 
+            (this.planForTodayAllSubjects[i].quantity === 1 ? " presentation" : " presentations");
+        }
+        else {
+          material = this.planForTodayAllSubjects[i].quantity.toString() + 
+            (this.planForTodayAllSubjects[i].quantity === 1 ? " lecture" : " lectures");
+        }
+
+        let daysRepeat = this.planForTodayAllSubjects[i].daysForRepeating.toString() + 
+            " days for repeating"
+
+        let message = material + ", " + daysRepeat;
+        return message;
+
+      }
+    }
   }
 
   ngOnDestroy() {
