@@ -19,5 +19,13 @@
     text-align: center;
 }
 
+#message {
+    height: 500px;
+    padding-top: 50px;
+    text-align: center;
+    color: indigo;
+    font-size: 30px;
+}
+
 
 

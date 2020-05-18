@@ -30,8 +30,4 @@ export class OrganizerService {
     let now = new Date();
     return Math.floor((exam.getTime() - now.getTime()) / (24*60*60*1000));
   }
-
-  
-
-
 }

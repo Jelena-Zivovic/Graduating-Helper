@@ -5,13 +5,17 @@
             <form [formGroup]="basicInfoGroup"  >
                 <mat-form-field>
                     <mat-label>Subject name</mat-label>
-                    <input matInput formControlName="subjectName" type="text" >
+                    <input matInput 
+                           formControlName="subjectName" 
+                           type="text">
                     <mat-error>Subject name is required</mat-error>
                 </mat-form-field>
                 <br>
                 <mat-form-field>
                     <mat-label>Exam date</mat-label>
-                    <input matInput formControlName="examDate" type="date" >
+                    <input matInput 
+                           formControlName="examDate" 
+                           type="date">
                     <mat-error *ngIf="checkExamDate()">Exam date is invalid</mat-error>
                 </mat-form-field>
                 <div>
@@ -90,5 +94,7 @@
     </mat-vertical-stepper>
     <button mat-button 
             type="submit"
-            [disabled]="isFormCorrect() ? false : true">Submit</button>
+            [disabled]="isFormCorrect() ? false : true">
+        Submit
+    </button>
 </form>

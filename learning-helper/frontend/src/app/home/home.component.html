@@ -12,7 +12,7 @@
                 mat-raised-button 
                 color="primary" 
                 (click)="setDisplayedQuote()">
-                New random quote
+            New random quote
         </button>
     </mat-tab>
     <mat-tab label="Learning" >
@@ -23,11 +23,15 @@
             [style.width]="'400px'" 
             [style.cursor]="'pointer'">
         </div>
-        <div *ngIf="!isUserLoggedIn()">
-            User is not logged in
+        <div *ngIf="!isUserLoggedIn()" id="message">
+            <p>Please sign in or register.</p>
+            <img src="../../assets/arrow.png" 
+                 height="350px" 
+                 width="250px">
         </div>
     </mat-tab>
-    <mat-tab *ngIf="isUserLoggedIn()" label="Account">
+    <mat-tab *ngIf="isUserLoggedIn()" 
+             label="Account">
         <learn-user-info></learn-user-info>
     </mat-tab>
     <mat-tab label="Help"> Content 3 </mat-tab>

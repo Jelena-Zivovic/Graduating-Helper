@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { ExamDateValidators } from './exam-date.validators';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -31,9 +32,8 @@ export class NewSubjectComponent implements OnInit {
     materialInfoGroup: this.materialInfoGroup
   });
 
-  constructor(private organizerService: OrganizerService) {
-    
-  }
+  constructor(private router: Router, 
+              private organizerService: OrganizerService) { }
 
   ngOnInit(): void {
   }
@@ -57,12 +57,24 @@ export class NewSubjectComponent implements OnInit {
 
   submit() {
     let subject = {
-      subjectName: this.form.get('basicInfoGroup').get('subjectName').value,
-      examDate: this.form.get('basicInfoGroup').get('examDate').value,
-      typeOfExam: this.form.get('complexityGroup').get('typeOfExam').value,
-      complexityLevel: this.form.get('complexityGroup').get('complexityLevel').value,
-      materialType: this.form.get('materialInfoGroup').get('materialType').value,
-      quantityOfMaterial: this.form.get('materialInfoGroup').get('quantityOfMaterial').value
+      subjectName: this.form.get('basicInfoGroup')
+                            .get('subjectName')
+                            .value,
+      examDate: this.form.get('basicInfoGroup')
+                         .get('examDate')
+                         .value,
+      typeOfExam: this.form.get('complexityGroup')
+                           .get('typeOfExam')
+                           .value,
+      complexityLevel: this.form.get('complexityGroup')
+                                .get('complexityLevel')
+                                .value,
+      materialType: this.form.get('materialInfoGroup')
+                             .get('materialType')
+                             .value,
+      quantityOfMaterial: this.form.get('materialInfoGroup')
+                                   .get('quantityOfMaterial')
+                                   .value
 
     };
     this.organizerService.addSubjectForUser(localStorage.getItem('username'), subject).subscribe(ret => {
@@ -72,10 +84,16 @@ export class NewSubjectComponent implements OnInit {
       }
       else {
         console.log('Subject is entered.');
+        this.form.reset();
+        //needs fixing, just reloading component
+        window.location.reload();
+        
+
       }
+
+      
+      
+
     });
-    
-
   }
-
 }

@@ -1,7 +1,14 @@
 <div id="mainContainerHeader">
     <div id="titleContainer">
-        <h1 id="titleHeader" [routerLink]="['/']">Learning helper</h1>
+        <h1 id="titleHeader" 
+            [routerLink]="['/']">
+            Learning helper
+        </h1>
     </div>
-    <learn-login *ngIf="!isUserLoggedIn();" id="loginRegisterContainer"></learn-login>
-    <learn-user *ngIf="isUserLoggedIn();" id="userLoggedContainer"></learn-user>
+    <learn-login *ngIf="!isUserLoggedIn();" 
+                 id="loginRegisterContainer">
+    </learn-login>
+    <learn-user *ngIf="isUserLoggedIn();" 
+                id="userLoggedContainer">
+    </learn-user>
 </div>

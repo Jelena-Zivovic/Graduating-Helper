@@ -75,6 +75,20 @@ function deleteUser(username) {
     fs.writeFile('users.json', JSON.stringify(usersTmp), () => {
 
     });
+
+    let subjectsTmp = [];
+    for (let i = 0; i < subjects.length; i++) {
+        if (username === subjects[i].username) {
+            continue;
+        }
+        else {
+            subjectsTmp.push(subjects[i]);
+        }
+    }
+
+    fs.writeFile('subjects.json', JSON.stringify(subjectsTmp), () => {
+
+    });
 }
 
 function getSubjectsForUser(username) {

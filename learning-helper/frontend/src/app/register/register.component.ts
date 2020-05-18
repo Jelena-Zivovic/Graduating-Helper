@@ -39,6 +39,4 @@ export class RegisterComponent implements OnInit {
       UniqueUsernameDirective.isUnique;
   }
 
- 
-
 }

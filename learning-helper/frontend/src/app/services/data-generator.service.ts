@@ -35,7 +35,5 @@ export class DataGeneratorService {
     let chosenQuote = this.quotes[randomId];
     console.log(chosenQuote);
     return {quote: chosenQuote.text, author: chosenQuote.author};
-
-
   }
 }

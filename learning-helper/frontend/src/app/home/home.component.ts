@@ -17,19 +17,14 @@ export class HomeComponent implements OnInit {
               private authService: AuthenticationService,
               private router: Router) {
     
-    
     this.displayedQuote = {
       quote: "You don't have to be great to start, but you have to start to be great.",
       author: "Zig Ziglar"
-
     }
-    
   }
 
   ngOnInit(): void {
     this.generator.getQuotesFromServer();
-    
-
   }
 
   isUserLoggedIn() {
@@ -49,9 +44,4 @@ export class HomeComponent implements OnInit {
       author: chosenQuote.author
     };
   }
-
-  
-
-  
-
 }

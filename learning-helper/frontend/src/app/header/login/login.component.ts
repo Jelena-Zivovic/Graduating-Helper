@@ -10,7 +10,6 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-
   form = new FormGroup({
     username: new FormControl('', [Validators.required]), 
     password: new FormControl('', [Validators.required])
@@ -23,7 +22,6 @@ export class LoginComponent implements OnInit {
   }
 
   login(data) {
-    //from here
     this.authService.login(data).subscribe(ret => {
       if (!ret) {
         alert("user is not registered");
@@ -36,9 +34,7 @@ export class LoginComponent implements OnInit {
         else {
           alert("wrong password");
         }
-        
       }
-
     });
   }
 
@@ -49,5 +45,4 @@ export class LoginComponent implements OnInit {
   logoutUser() {
     this.authService.logout();
   }
-
 }

@@ -7,6 +7,9 @@ import { Injectable } from '@angular/core';
 })
 export class RegisterGuardService implements CanActivate {
 
+  constructor(private authService: AuthenticationService,
+              private router: Router) { }
+
   canActivate() {
     if (!this.authService.isUserLoggedIn()) {
       return true;
@@ -15,9 +18,5 @@ export class RegisterGuardService implements CanActivate {
       this.router.navigate(['/']);
       return false;
     }
-
   }
-
-  constructor(private authService: AuthenticationService,
-              private router: Router) { }
 }

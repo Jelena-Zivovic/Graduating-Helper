@@ -1,5 +1,8 @@
 <div id="loginRegisterContainer">
-    <form   id="formHeader" [formGroup]="form" (ngSubmit)="login(form.value)" right>
+    <form id="formHeader" 
+          [formGroup]="form" 
+          (ngSubmit)="login(form.value)" 
+          right>
         <mat-form-field>
             <mat-label>username</mat-label>
             <input matInput  
@@ -14,10 +17,15 @@
                    formControlName="password">
             <mat-error>Password is required</mat-error>
         </mat-form-field>
-        <button mat-button type="submit" >Sign in</button>
-    
+        <button mat-button 
+                type="submit">
+            Sign in
+        </button>
     </form>
-   
     <p id="question">Don't have an account?</p>
-    <button mat-button id="registerButton" [routerLink]="['/register']">Register</button>
+    <button mat-button 
+            id="registerButton" 
+            [routerLink]="['/register']">
+        Register
+    </button>
 </div>

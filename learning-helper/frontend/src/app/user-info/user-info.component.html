@@ -19,29 +19,30 @@
     </div>
     <mat-divider [vertical]="true" id="divider"></mat-divider>
     <div id="userSubjects">
-    <p class="subjects"><b>User's subjects:</b></p>
-    <mat-divider></mat-divider>
-    <table class="subjects" class="table table-hover">
-        <thead>
-            <tr>
-                <th>Subject name</th>
-                <th>Exam date</th>
-                <th>Type of exam</th>
-                <th>Material type</th>
-                <th>Quantity of material</th>
-                <th>Days until exam</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let subject of userSubjects">
-                <td> {{subject.subjectName}} </td>
-                <td> {{subject.examDate}} </td>
-                <td> {{subject.typeOfExam}} </td>
-                <td> {{subject.materialType}} </td>
-                <td> {{subject.quantityOfMaterial}} </td>
-                <td> {{subject.daysUntilExam}} </td>
-            </tr>
-        </tbody>
-    </table>
-    
+        <p class="subjects"><b>User's subjects:</b></p>
+        <mat-divider></mat-divider>
+        <table class="subjects" class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Subject name</th>
+                    <th>Exam date</th>
+                    <th>Type of exam</th>
+                    <th>Material type</th>
+                    <th>Quantity of material</th>
+                    <th>Days until exam</th>
+                    <th>Progress</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let subject of userSubjects">
+                    <td> {{subject.subjectName}} </td>
+                    <td> {{subject.examDate}} </td>
+                    <td> {{subject.typeOfExam}} </td>
+                    <td> {{subject.materialType}} </td>
+                    <td> {{subject.quantityOfMaterial}} </td>
+                    <td> {{subject.daysUntilExam}} </td>
+                    <td> data </td>
+                </tr>
+            </tbody>
+        </table>
     </div>

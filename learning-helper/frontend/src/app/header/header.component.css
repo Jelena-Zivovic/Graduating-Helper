@@ -10,7 +10,6 @@
 }
 
 #titleContainer {
-    /*background-color: blue;*/
     width: 400px;
     height: 100px;
     position: relative;
@@ -19,7 +18,6 @@
 }
 
 #loginRegisterContainer {
-    /*background-color: brown;*/
     width: 800px;
     height: 100px;
     position: relative;

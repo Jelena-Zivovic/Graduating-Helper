@@ -1,7 +1,7 @@
 import { AuthenticationService } from './../services/authentication.service';
 import { Component, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
 import { OrganizerService } from '../services/organizer.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'learn-user-info',
@@ -20,13 +20,13 @@ export class UserInfoComponent implements OnInit {
   userSubjects = [];
 
   private subUserInfo: Subscription;
-  private subUserSubjects: Subscription;
+  private subSubjects: Subscription;
 
   constructor(private authService: AuthenticationService,
               private organizerService: OrganizerService) { }
 
   ngOnInit(): void {
-    this.subUserInfo = this.authService.getUserInfo(localStorage.getItem('username')).subscribe(ret => {
+   this.subUserInfo = this.authService.getUserInfo(localStorage.getItem('username')).subscribe(ret => {
       this.userInfo = {
         firstName: ret.firstName,
         lastName: ret.lastName,
@@ -35,13 +35,18 @@ export class UserInfoComponent implements OnInit {
       }
     });
 
-    this.subUserSubjects = this.organizerService.getUserSubjects(localStorage.getItem('username')).subscribe(ret => {
+    this.subSubjects = this.organizerService.getUserSubjects(localStorage.getItem('username')).subscribe(ret => {
       if (ret !== null) {
-        let len = (ret as Object[]).length;
-        for (let i = 1; i < len; i++) {
+        let len = (ret as []).length;
+        
+        for (let i = 0; i < len; i++) {
+          let date = new Date(ret[i].examDate);
+          let dateStr = date.getDate().toString() + '.' 
+                      + (date.getMonth() + 1).toString() + '.' 
+                      + date.getFullYear() + '.';
           this.userSubjects.push({
             subjectName: ret[i].subjectName,
-            examdate: ret[i].examDate,
+            examDate: dateStr,
             typeOfExam: ret[i].typeOfExam,
             materialType: ret[i].materialType,
             quantityOfMaterial: ret[i].quantityOfMaterial,
@@ -49,7 +54,9 @@ export class UserInfoComponent implements OnInit {
           });
         }
       }
-      
+      else {
+        console.log('something went wrong');
+      }
     });
   }
 
@@ -59,18 +66,15 @@ export class UserInfoComponent implements OnInit {
 
   deleteAccount() {
     if (confirm('Are you sure?')) {
-      this.authService.deleteUser(localStorage.getItem('username')).subscribe(ret => {
-        console.log('User is deleted');
-        
-        
+      this.authService.deleteUser(localStorage.getItem('username')).subscribe(() => {
+        console.log('User is deleted'); 
       });
     }
-    
   }
 
   ngOnDestroy() {
     this.subUserInfo.unsubscribe();
-    this.subUserSubjects.unsubscribe();
+    this.subSubjects.unsubscribe();
   }
 
 }
