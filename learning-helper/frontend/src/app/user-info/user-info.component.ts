@@ -45,12 +45,15 @@ export class UserInfoComponent implements OnInit {
                       + (date.getMonth() + 1).toString() + '.' 
                       + date.getFullYear() + '.';
           this.userSubjects.push({
+            id: ret[i].id,
             subjectName: ret[i].subjectName,
             examDate: dateStr,
             typeOfExam: ret[i].typeOfExam,
             materialType: ret[i].materialType,
             quantityOfMaterial: ret[i].quantityOfMaterial,
-            daysUntilExam: this.organizerService.calculateDaysUntilExam(ret[i].examDate)
+            daysUntilExam: this.organizerService.calculateDaysUntilExam(ret[i].examDate),
+            progress: ret[i].progress
+
           });
         }
       }
@@ -69,6 +72,15 @@ export class UserInfoComponent implements OnInit {
       this.authService.deleteUser(localStorage.getItem('username')).subscribe(() => {
         console.log('User is deleted'); 
       });
+    }
+  }
+
+  calculateValue(id) {
+    for (let i = 0; i < this.userSubjects.length; i++) {
+      if (id === this.userSubjects[i].id) {
+        let value = (100*this.userSubjects[i].progress) / this.userSubjects[i].quantityOfMaterial;
+        return value;
+      }
     }
   }
 

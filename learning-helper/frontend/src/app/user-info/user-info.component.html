@@ -41,7 +41,14 @@
                     <td> {{subject.materialType}} </td>
                     <td> {{subject.quantityOfMaterial}} </td>
                     <td> {{subject.daysUntilExam}} </td>
-                    <td> data </td>
+                    <td> 
+                        <mat-progress-spinner
+                            color="primary"
+                            mode="determinate"
+                            [value]="calculateValue(subject.id)"
+                            [diameter]="30">
+                        </mat-progress-spinner>
+                    </td>
                 </tr>
             </tbody>
         </table>
