@@ -33,12 +33,11 @@
             <th></th>
         </thead>
         <tbody>
-            <tr *ngFor="let subject of planForToday"
-                id="subjectRow">
-                <td id="subjectName"> {{subject.subjectName}} </td>
-                <td id="quantity"> {{subject.materialForToday}} </td>
-                <td id="materialType"> {{subject.materialType}} </td>
-                <td id="typeOfExam"> {{subject.typeOfExam}} </td>
+            <tr *ngFor="let subject of planForToday">
+                <td> {{subject.subjectName}} </td>
+                <td> {{subject.materialForToday}} </td>
+                <td> {{subject.materialType}} </td>
+                <td> {{subject.typeOfExam}} </td>
                 <td> <button mat-stroked-button
                              (click)="subjectDone(subject.id, subject.materialForToday)"
                              id="doneButton">
@@ -55,6 +54,7 @@
     <button mat-raised-button 
             color="primary"
             (click)="backToOrganization()">
-        Back to organization
+        Change plan
     </button>
+    
 </div>

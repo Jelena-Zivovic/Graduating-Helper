@@ -15,6 +15,25 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors(corsOptions));
 
+app.use(function (req, res, next) {
+
+    // Website you wish to allow to connect
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
+
+    // Request methods you wish to allow
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+
+    // Request headers you wish to allow
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+
+    // Set to true if you need the website to include cookies in the requests sent
+    // to the API (e.g. in case you use sessions)
+    res.setHeader('Access-Control-Allow-Credentials', true);
+
+    // Pass to next layer of middleware
+    next();
+});
+
 function getUserByUsername(username) {
     for (let i = 0; i < users.length; i++) {
         if (users[i].username === username) {
@@ -135,16 +154,18 @@ function addSubjectForUser(username, subject) {
 
 function changeProgress(username, idSubject, progressMade) {
     for (let i = 0; i < subjects.length; i++) {
-        if (username === subjects[i].username) {
+        if (subjects[i].username === username) {
             for (let j = 0; j < subjects[i].subjects.length; j++) {
-                if (idSubject === subjects[i].subjects[j]) {
+                if (subjects[i].subjects[j].id === idSubject) {
                     subjects[i].subjects[j].progress += progressMade;
+                    fs.writeFile('subjects.json', JSON.stringify(subjects), () => {});
                     return;
                 }
             }
         }
     }
 }
+
 
 function getSubject(username, id) {
     for (let i = 0; i < subjects.length; i++) {
@@ -208,9 +229,9 @@ app.route('/api/subjects/:username').post((request, response) => {
     response.send(addSubjectForUser(request.params['username'], request.body));
 });
 
-app.route('/api/subjects/:username/:id').put((request, response) => {
-    let id = Number(request.params['id']);
-    let progress = request.body.progress;
+app.route('/api/subjects/:username').put((request, response) => {
+    let id = Number(request.body.id);
+    let progress = Number(request.body.progress);
     changeProgress(request.params['username'], id, progress);
     response.status(200);
 });

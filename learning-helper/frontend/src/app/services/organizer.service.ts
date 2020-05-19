@@ -34,7 +34,7 @@ export class OrganizerService {
   }
 
   updateSubject(username, id, progress) {
-    return this.http.put('http://localhost:3000/api/subjects/' + username + '/' + id, progress);
+    return this.http.put('http://localhost:3000/api/subjects/' + username, {id: id, progress: progress});
   }
 
   organizeSubjectForToday(subject) {

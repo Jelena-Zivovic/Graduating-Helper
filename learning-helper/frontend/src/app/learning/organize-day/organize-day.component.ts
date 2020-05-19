@@ -61,6 +61,8 @@ export class OrganizeDayComponent implements OnInit {
 
   backToOrganization() {
     this.isSelected = false;
+    localStorage.removeItem('enteredPlan');
+    localStorage.setItem('enteredPlan', 'false');
   }
 
   getQuantityForTodayMessage(id) {
@@ -102,9 +104,8 @@ export class OrganizeDayComponent implements OnInit {
 
     this.organizerService.updateSubject(localStorage.getItem('username'), Number(id), Number(quantity))
           .subscribe(ret => {
-            console.log(ret);
-          });
-
+      
+    });
 
   }
 
