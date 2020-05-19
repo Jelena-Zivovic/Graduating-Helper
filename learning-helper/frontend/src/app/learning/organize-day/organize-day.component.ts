@@ -106,6 +106,8 @@ export class OrganizeDayComponent implements OnInit {
           .subscribe(ret => {
       
     });
+    // user-info component needs reloading
+    window.location.reload();
 
   }
 
