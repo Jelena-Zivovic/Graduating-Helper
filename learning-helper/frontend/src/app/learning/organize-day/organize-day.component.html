@@ -24,7 +24,7 @@
 <div *ngIf="isSelected">
     <p class="message">This is the plan for today:</p>
     <mat-divider></mat-divider>
-    <table class="table table-hover">
+    <table class="table table-hover" id="planTable"> 
         <thead>
             <th>Subject name</th>
             <th>Material for today</th>
@@ -33,13 +33,14 @@
             <th></th>
         </thead>
         <tbody>
-            <tr *ngFor="let subject of planForToday">
+            <tr *ngFor="let subject of planForToday"
+                [attr.id]="subject.id">
                 <td> {{subject.subjectName}} </td>
                 <td> {{subject.materialForToday}} </td>
                 <td> {{subject.materialType}} </td>
                 <td> {{subject.typeOfExam}} </td>
                 <td> <button mat-stroked-button
-                             (click)="subjectDone(subject.id, subject.materialForToday)"
+                             (click)="subjectDone(subject)"
                              id="doneButton">
                         Done
                      </button> 

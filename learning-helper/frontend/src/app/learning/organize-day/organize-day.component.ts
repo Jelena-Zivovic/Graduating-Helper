@@ -1,6 +1,9 @@
+import { MatStepperModule } from '@angular/material/stepper';
+import { UserInfoComponent } from './../../user-info/user-info.component';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { OrganizerService } from 'src/app/services/organizer.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'learn-organize-day',
@@ -9,6 +12,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OrganizeDayComponent implements OnInit {
 
+  @Input() activeTab: number;
+
   subjectsForToday =  [];
   isSelected = localStorage.getItem('enteredPlan')  === 'true' ? true : false;
   planForTodayAllSubjects = [];
@@ -16,19 +21,24 @@ export class OrganizeDayComponent implements OnInit {
   
 
   private subSubjects: Subscription;
+  private subPlan: Subscription;
 
-  constructor(private organizerService: OrganizerService) { }
+  constructor(private organizerService: OrganizerService,
+              private router: Router) {
+    
+  }
 
   ngOnInit(): void {
     this.subSubjects = this.organizerService.getUserSubjects(localStorage.getItem('username'))
         .subscribe(ret => {
         this.subjectsForToday = (ret as []);
-
-        for (let i = 0; i < this.subjectsForToday.length; i++) {
-          this.planForTodayAllSubjects.push(this.organizerService.organizeSubjectForToday(this.subjectsForToday[i]));
-        }
-        
-    });
+    });    
+    this.subPlan = this.organizerService.getUserPlan(localStorage.getItem('username'))
+        .subscribe(ret => {
+          if (ret !== null) {
+            this.planForToday = ret as [];
+          }
+        });
   }
 
   getMaterialForToday(id) {
@@ -40,74 +50,102 @@ export class OrganizeDayComponent implements OnInit {
   }
 
   submit(data) {
-    localStorage.setItem('enteredPlan', 'true');
-    this.isSelected = true;
-    
+
+    this.organizerService.deletePlans(localStorage.getItem('username'))
+      .subscribe(ret => {
+        
+    });
+
+
     for (let i = 0; i < data.length; i++) {
-      let id = Number(data[i]);
-      let found = this.subjectsForToday.find(s => s.id === this.planForTodayAllSubjects[i].id);
-      if (found !== undefined) {
-        this.planForToday.push({
-          id: id,
-          subjectName: found.subjectName,
-          materialForToday: this.planForTodayAllSubjects[i].quantity,
-          materialType: found.materialType,
-          typeOfExam: found.typeOfExam
-        });
+      let result = this.subjectsForToday.find(s => {
+        return s.id === Number(data[i]);
+      });
+      if (result !== undefined) {
+        let plan = this.organizerService.organizeSubjectForToday(result);
+        this.organizerService.addPlan(localStorage.getItem('username'), plan)
+          .subscribe(ret => {
+          });
+        
       }
     }
 
+    localStorage.setItem('enteredPlan', 'true');
+    this.isSelected = true;
+
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate(['/learning']);
+    });
+    this.activeTab = 1;
+    
   }
+
 
   backToOrganization() {
     this.isSelected = false;
     localStorage.removeItem('enteredPlan');
     localStorage.setItem('enteredPlan', 'false');
+  
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate(['/learning']);
+    });
+    this.activeTab = 1;
   }
 
   getQuantityForTodayMessage(id) {
     
+    let subjectPlan = this.subjectsForToday.find(s => {
+      return s.id === id;
+    });
 
-    for (let i = 0; i < this.planForTodayAllSubjects.length; i++) {
-      if (id === this.planForTodayAllSubjects[i].id) {
-        
-        let material = "";
-        if (this.planForTodayAllSubjects[i].materialType === 'book') {
-          material = this.planForTodayAllSubjects[i].quantity.toString() + " pages"
-        }
-        else if (this.planForTodayAllSubjects[i].materialType === 'videoLessons') {
-          material = this.planForTodayAllSubjects[i].quantity.toString() + 
-            (this.planForTodayAllSubjects[i].quantity === 1 ? " video lesson" : " video lessons");
-        }
-        else if (this.planForTodayAllSubjects[i].materialType === 'presentations') {
-          material = this.planForTodayAllSubjects[i].quantity.toString() + 
-            (this.planForTodayAllSubjects[i].quantity === 1 ? " presentation" : " presentations");
-        }
-        else {
-          material = this.planForTodayAllSubjects[i].quantity.toString() + 
-            (this.planForTodayAllSubjects[i].quantity === 1 ? " lecture" : " lectures");
-        }
-
-        let daysRepeat = this.planForTodayAllSubjects[i].daysForRepeating.toString() + 
-            " days for repeating"
-
-        let message = material + ", " + daysRepeat;
-        return message;
-
-      }
+    if (subjectPlan === undefined) {
+      return;
     }
+
+    let material = "";
+    let quantity = this.organizerService.organizeSubjectForToday(subjectPlan).materialForToday;
+
+    if (subjectPlan.materialType === 'book') {
+      material = quantity + " pages";
+    }
+    else if (subjectPlan.materialType === 'videoLessons') {
+      material = quantity === 1 ? "1 video lesson" : (quantity + " video lessons");
+    }
+    else if (subjectPlan.materialType === 'presentations') {
+      material = quantity === 1 ? "1 presentation" : (quantity + " presentations");
+    }
+    else if (subjectPlan.materialType === 'lectures') {
+      material = quantity === 1 ? "1 lecture" : (quantity + " lectures");
+    }
+
+    let daysRepeat = this.organizerService.organizeSubjectForToday(subjectPlan).daysForRepeating;
+
+    return material + ", " + daysRepeat + " days for repeating";
+
   }
 
-  subjectDone(id, quantity) {
+  subjectDone(subject) {
     
     //TODO: row from the table must dissapear
 
-    this.organizerService.updateSubject(localStorage.getItem('username'), Number(id), Number(quantity))
+    this.organizerService.updateSubject(localStorage.getItem('username'), Number(subject.id), Number(subject.materialForToday))
           .subscribe(ret => {
       
     });
-    // user-info component needs reloading
-    window.location.reload();
+
+    for (let i = 0; i < this.planForToday.length; i++) {
+      if (subject.id === this.planForToday[i].id) {
+        this.planForToday.splice(i, 1);
+        break;
+      }
+    }
+
+    document.getElementById(subject.id.toString()).style.display = 'none';    
+
+    /*this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate(['/learning']);
+    });*/
+    this.activeTab = 2;
 
   }
 

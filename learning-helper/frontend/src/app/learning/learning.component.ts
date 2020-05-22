@@ -1,5 +1,5 @@
 import { AuthenticationService } from './../services/authentication.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 
 @Component({
@@ -9,7 +9,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LearningComponent implements OnInit {
 
+  
+
   constructor(private authService: AuthenticationService) { }
+
+  activeTab = 1;
 
   ngOnInit(): void {
   }
@@ -18,5 +22,7 @@ export class LearningComponent implements OnInit {
     return this.authService.isUserLoggedIn();
     
   }
+
+  
 
 }

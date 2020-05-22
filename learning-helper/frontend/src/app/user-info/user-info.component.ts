@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { AuthenticationService } from './../services/authentication.service';
 import { Component, OnInit } from '@angular/core';
 import { OrganizerService } from '../services/organizer.service';
@@ -23,7 +24,8 @@ export class UserInfoComponent implements OnInit {
   private subSubjects: Subscription;
 
   constructor(private authService: AuthenticationService,
-              private organizerService: OrganizerService) { }
+              private organizerService: OrganizerService,
+              private router: Router) { }
 
   ngOnInit(): void {
    this.subUserInfo = this.authService.getUserInfo(localStorage.getItem('username')).subscribe(ret => {
@@ -71,6 +73,7 @@ export class UserInfoComponent implements OnInit {
     if (confirm('Are you sure?')) {
       this.authService.deleteUser(localStorage.getItem('username')).subscribe(() => {
         console.log('User is deleted'); 
+        this.router.navigate(['/']);
       });
     }
   }

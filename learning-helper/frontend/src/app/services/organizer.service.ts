@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
@@ -10,6 +11,16 @@ export interface Subject {
   materialType: string,
   quantityOfMaterial: number,
   progress: number
+};
+
+export interface Plan {
+  date: string,
+  id: number,
+  subjectName: string,
+  materialForToday: number,
+  materialType: string,
+  typeOfExam: string,
+  daysForRepeating: number
 };
 
 @Injectable({
@@ -50,16 +61,16 @@ export class OrganizerService {
       daysForRepeating = 3;
     }
 
-    console.log(subject);
-
     let daysForPreparing = daysUntilExam - daysForRepeating;
     let materialLeft = subject.quantityOfMaterial - subject.progress;
 
     if (subject.materialType === 'book') {
       return {
         id: subject.id,
+        subjectName: subject.subjectName,
+        materialForToday: Math.ceil(materialLeft / daysForPreparing),
         materialType: subject.materialType,
-        quantity: Math.ceil(materialLeft / daysForPreparing),
+        typeOfExam: subject.typeOfExam,
         daysForRepeating: daysForRepeating
       }
     }
@@ -67,19 +78,22 @@ export class OrganizerService {
 
       let q = Math.floor(materialLeft / daysForPreparing);
       if (q === 0) {
-        console.log("bla");
         return {
           id: subject.id,
+          subjectName: subject.subjectName,
+          materialForToday: 1,
           materialType: subject.materialType,
-          quantity: 1,
+          typeOfExam: subject.typeOfExam,
           daysForRepeating: daysForRepeating +  (daysForPreparing - materialLeft)
         }
       }
       else {
         return {
           id: subject.id,
+          subjectName: subject.subjectName,
+          materialForToday: Math.ceil(materialLeft / daysForPreparing),
           materialType: subject.materialType,
-          quantity: Math.ceil(materialLeft / daysForPreparing),
+          typeOfExam: subject.typeOfExam,
           daysForRepeating: daysForRepeating
         }
 
@@ -91,5 +105,19 @@ export class OrganizerService {
     return this.http.get('http://localhost:3000/api/subjects/' 
             + localStorage.getItem('username') + "/" + id.toString());
   }
+
+  getUserPlan(username) {
+    return this.http.get('http://localhost:3000/api/plans/' + username);
+  }
+
+  addPlan(username, plan) {
+    return this.http.post('http://localhost:3000/api/plans/' + username, plan);
+  }
+
+  deletePlans(username) {
+    return this.http.delete('http://localhost:3000/api/plans/' + username);
+  }
+
+
 
 }

@@ -5,6 +5,7 @@ const cors = require('cors');
 
 const users = require('./users.json');
 const subjects = require('./subjects.json');
+const plans = require('./plans.json');
 
 let corsOptions = {
     origin: 'http://localhost:4200',
@@ -15,32 +16,18 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors(corsOptions));
 
-app.use(function (req, res, next) {
-
-    // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
-
-    // Request methods you wish to allow
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-
-    // Request headers you wish to allow
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-
-    // Set to true if you need the website to include cookies in the requests sent
-    // to the API (e.g. in case you use sessions)
-    res.setHeader('Access-Control-Allow-Credentials', true);
-
-    // Pass to next layer of middleware
-    next();
-});
-
 function getUserByUsername(username) {
-    for (let i = 0; i < users.length; i++) {
-        if (users[i].username === username) {
-            return users[i];
-        }
+
+    let result = users.find(u => {
+        return u.username === username;
+    })
+
+    if (result !== undefined) {
+        return result;
     }
-    return null;
+    else {
+        return null;
+    }
 }
 
 function registerUser(user) {
@@ -64,119 +51,322 @@ function registerUser(user) {
 }
 
 function changeUserInfo(username, newUserInfo) {
-    for (let i = 0; i < users.length; i++) {
-        if (users[i].username === username) {
-            users[i].username = newUserInfo.username;
-            users[i].firstName = newUserInfo.firstName;
-            users[i].lastName = newUserInfo.lastName;
-            users[i].email = newUserInfo.email;
-            users[i].password = newUserInfo.password;
 
-            fs.writeFile('users.json', JSON.stringify(users), () => {
+    let result = users.find(u => {
+        return username === u.username;
+    });
 
-            });
+    if (result !== undefined) {
+        users[i].username = newUserInfo.username;
+        users[i].firstName = newUserInfo.firstName;
+        users[i].lastName = newUserInfo.lastName;
+        users[i].email = newUserInfo.email;
+        users[i].password = newUserInfo.password;
+
+        fs.writeFile('users.json', JSON.stringify(users), () => {});
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+function deleteUser(username) {
+    let userTmp = users.find(u => {
+        return u.username === username;
+    });
+    
+    if (userTmp != undefined) {
+        let index = users.indexOf(userTmp);
+        users.splice(index, 1);
+        fs.writeFile('users.json', JSON.stringify(users), () => {});
+    }
+    else {
+        return false;
+    }
+
+    
+    let subjectTmp = subjects.find(s => {
+        return s.username === username;
+    });
+
+    if (subjectTmp !== undefined) {
+        let index = subjects.indexOf(subjectTmp);
+        subjects.splice(index, 1);
+        fs.writeFile('subjects.json', JSON.stringify(subjects), () => {});
+    }
+    
+    
+
+    let result = plans.find(u => {
+        return u.username === username;
+    });
+
+    if (result != undefined) {
+        let index = plans.indexOf(result);
+        plans.splice(index, 1);
+        fs.writeFile('plans.json', JSON.stringify(plans), () => {});
+    }
+
+    return true;
+    
+}
+
+function getSubjectsForUser(username) {
+
+    let subjectsUser = subjects.find(s => {
+        return s.username === username;
+    });
+
+    if (subjectsUser !== undefined) {
+        return subjectsUser.subjects;
+    }
+    else {
+        return null;
+    }
+
+}
+
+function addSubjectForUser(username, subject) {
+
+    let subjectsUser = subjects.find(s => {
+        return s.username === username;
+    });
+
+    if (subjectsUser === undefined) {
+        return false;
+    }
+
+    let checkSubjectName = subjectsUser.subjects.find(s => {
+        return s.subjectName === subject.username;
+    });
+    let checkTypeOfExam = subjectsUser.subjects.find(s => {
+        return s.typeOfExam === subject.typeOfExam;
+    });
+    let checkMaterialType = subjectsUser.subjects.find(s => {
+        return s.materialType === subject.materialType;
+    });
+
+    if ((checkSubjectName === undefined) || 
+        (checkTypeOfExam === undefined) || 
+        (checkMaterialType === undefined)) {
+        let id = subjectsUser.subjects.length + 1;
+
+        subjectsUser.subjects.push(
+            {
+                id: id,
+                subjectName: subject.subjectName,
+                examDate: subject.examDate,
+                typeOfExam: subject.typeOfExam,
+                complexityLevel: subject.complexityLevel,
+                materialType: subject.materialType,
+                quantityOfMaterial: subject.quantityOfMaterial,
+                progress: 0
+            }
+        );
+        fs.writeFile('subjects.json', JSON.stringify(subjects), () => {});
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+function changeProgress(username, idSubject, progressMade) {
+
+    let userSubjects = subjects.find(s => {
+        return s.username === username;
+    });
+    if (userSubjects === undefined) {
+        return false;
+    }
+    else {
+        let subjectToChange = userSubjects.subjects.find(s => {
+            return s.id === idSubject;
+        });
+        if (subjectToChange === undefined) {
+            return false;
+        }
+        else {
+            subjectToChange.progress += progressMade;
+            if (subjectToChange.progress === subjectToChange.quantityOfMaterial) {
+                let index = userSubjects.find(s => {
+                    deleteSubject(username, subjectToChange);
+                    deletePlan(username, subjectToChange);
+                });
+                
+            }
+            
+            return true;
+        }
+    }
+}
+
+function deleteSubject(username, subject) {
+    let userSubjects = subjects.find(s => {
+        return s.username === username;
+    });
+
+    let index = userSubjects.indexOf(subject);
+    userSubjects.splice(index, 1);
+
+    for (let i = 0; i < subjects.length; i++) {
+        if (username === subjects[i].username) {
+            subjects[i].subjects = userSubjects;
+            fs.writeFile('subjects.json', JSON.stringify(subjects), () => {});
             return;
         }
     }
 }
 
-function deleteUser(username) {
-    let usersTmp = [];
-    for (let i = 0; i < users.length; i++) {
-        if (username === users[i].username) {
+function deletePlan(username, subject) {
+    let userPlans = plans.find(p => {
+        return p.username === username;
+    });
+
+    let tmp = [];
+
+    for (let i = 0; i < userPlans.plans.length; i++) {
+        if ((subject.id === userPlans.plans[i].id) &&
+           (subject.subjectName === userPlans.plans[i].subjectName) && 
+           (subject.materialType === userPlans.plans[i].materialType) &&
+           (subject.typeOfExam === userPlans.plans[i].typeOfExam)) {
             continue;
         }
         else {
-            usersTmp.push(users[i]);
+            tmp.push(userPlans.plans[i]);
         }
     }
 
-    fs.writeFile('users.json', JSON.stringify(usersTmp), () => {
-
-    });
-
-    let subjectsTmp = [];
-    for (let i = 0; i < subjects.length; i++) {
-        if (username === subjects[i].username) {
-            continue;
-        }
-        else {
-            subjectsTmp.push(subjects[i]);
-        }
-    }
-
-    fs.writeFile('subjects.json', JSON.stringify(subjectsTmp), () => {
-
-    });
-}
-
-function getSubjectsForUser(username) {
-    for (let i = 0; i < subjects.length; i++) {
-        if (username === subjects[i].username) {
-            return subjects[i].subjects;
-        }
-    }
-    return null;
-}
-
-function addSubjectForUser(username, subject) {
-    for (let i = 0; i < subjects.length; i++) {
-        if (username === subjects[i].username) {
-            for (let j = 0; j < subjects[i].subjects; j++) {
-                if ((subject.subjectName === subjects[i].subjects[j].subjectName) && 
-                    (subject.typeOfExam === subjects[i].subjects[j].typeOfExam) && 
-                    (subject.materialType === subjects[i].subjects[j].materialType)) {
-                    return null;
-                }
-            }
-            let id = subjects[i].subjects.length + 1;
-
-            subjects[i].subjects.push(
-                {
-                    id: id,
-                    subjectName: subject.subjectName,
-                    examDate: subject.examDate,
-                    typeOfExam: subject.typeOfExam,
-                    complexityLevel: subject.complexityLevel,
-                    materialType: subject.materialType,
-                    quantityOfMaterial: subject.quantityOfMaterial,
-                    progress: 0
-                }
-            );
-            fs.writeFile('subjects.json', JSON.stringify(subjects), () => {
-
-            });
-            return true;
-
-        }
-    }
-}
-
-function changeProgress(username, idSubject, progressMade) {
-    for (let i = 0; i < subjects.length; i++) {
-        if (subjects[i].username === username) {
-            for (let j = 0; j < subjects[i].subjects.length; j++) {
-                if (subjects[i].subjects[j].id === idSubject) {
-                    subjects[i].subjects[j].progress += progressMade;
-                    fs.writeFile('subjects.json', JSON.stringify(subjects), () => {});
-                    return;
-                }
-            }
+    for (let i = 0; i < plans.length; i++) {
+        if (username === plans[i].username) {
+            plans[i].plans = tmp;
+            fs.writeFile('plans.json', JSON.stringify(plans), () => {});
+            return;
         }
     }
 }
 
 
 function getSubject(username, id) {
-    for (let i = 0; i < subjects.length; i++) {
-        if (username === subjects[i].username) {
-            for (let j = 0; j < subjects[i].subjects.length; j++) {
-                if (id === subjects[i].subjects[j]) {
-                    return subjects[i].subjects[j];
-                }
-            }
+
+    let userSubjects = subjects.find(s => {
+        return s.username === username;
+    });
+    if (userSubjects === undefined) {
+        return null;
+    }
+    else {
+        let subjectToReturn = userSubjects.find(s => {
+            return s.id === id;
+        });
+        return subjectToReturn === undefined ? null : subjectToReturn;
+    }
+
+}
+
+function addPlan(username, plan) {
+
+    let planUser = plans.find(p => {
+        return p.username === username;
+    });
+
+    if (planUser === undefined) {
+        plans.push({
+            username: username,
+            plans: [{
+                date: (new Date()).toDateString(),
+                id: plan.id,
+                subjectName: plan.subjectName,
+                materialForToday: plan.materialForToday,
+                materialType: plan.materialType,
+                typeOfExam: plan.typeOfExam
+            }]
+        });
+        fs.writeFile('plans.json', JSON.stringify(plans), () => {});
+        return true;
+    }
+    else {
+        let checkDate = planUser.plans.find(p => {
+            return p.date === plan.date;
+        });
+        let checkId = planUser.plans.find(p => {
+            return p.id === plan.id;
+        });
+        let checkMaterialType = planUser.plans.find(p => {
+            return p.materialType === plan.materialType;
+        });
+        let checkTypeOfExam = planUser.plans.find(p => {
+            return p.typeOfExam === plan.typeOfExam;
+        });
+
+        if ((checkDate === undefined) || 
+            (checkId === undefined) || 
+            (checkMaterialType === undefined) ||
+            (checkTypeOfExam === undefined)) {
+            planUser.plans.push({
+                date: (new Date()).toDateString(),
+                id: plan.id,
+                subjectName: plan.subjectName,
+                materialForToday: plan.materialForToday,
+                materialType: plan.materialType,
+                typeOfExam: plan.typeOfExam
+            });
+            fs.writeFile('plans.json', JSON.stringify(plans), () => {});
+            
+            return true;
+        }
+        else {
+            return false;
         }
     }
+
+}
+
+
+function getUserPlanForToday(username) {
+
+    let planUser = plans.find(p => {
+        return p.username === username;
+    });
+
+    if (planUser === undefined) {
+        return null;
+    }
+    else {
+        let retValue = [];
+        for (let i = 0; i < planUser.plans.length; i++) {
+            if (planUser.plans[i].date === (new Date()).toDateString()) {
+                retValue.push(planUser.plans[i]);
+            }
+        }
+        
+        return retValue;
+    }
+
+}
+
+function deleteUserPlansForToday(username) {
+    let planUser = plans.find(p => {
+        return p.username === username;
+    });
+    if (planUser === undefined) {
+        return false;
+    }
+
+    let planForToday = planUser.plans.find(p => {
+        return p.date === (new Date()).toDateString();
+    });
+
+    if (planForToday === undefined) {
+        return false;
+    }
+
+    let index = plans.indexOf(planUser);
+    plans.splice(index, 1);
+    fs.writeFile('plans.json', JSON.stringify(plans), () => {});
+    return true;
+
 }
 
 
@@ -199,22 +389,15 @@ app.route('/api/users/:username').get((request, response) => {
 });
 
 app.route('/api/users').post((request, response) => {
-    if (registerUser(request.body)) {
-        response.status(200).send(request.body);
-    }
-    else {
-        response.status(404).send("user is already registered");
-    }
+    response.send(registerUser(request.body));
 });
 
 app.route('/api/users/:username').put((request, response) => {
-    changeUserInfo(request.params['username'], request.body);
-    response.status(200);
+    response.send(changeUserInfo(request.params['username'], request.body));
 });
 
 app.route('/api/users/:username').delete((request, response) => {
-    deleteUser(request.params['username']);
-    response.status(200);
+    response.send(deleteUser(request.params['username']));
 });
 
 app.route('/api/subjects/:username').get((request, response) => {
@@ -232,8 +415,20 @@ app.route('/api/subjects/:username').post((request, response) => {
 app.route('/api/subjects/:username').put((request, response) => {
     let id = Number(request.body.id);
     let progress = Number(request.body.progress);
-    changeProgress(request.params['username'], id, progress);
-    response.status(200);
+    response.send(changeProgress(request.params['username'], id, progress));
+});
+
+app.route('/api/plans/:username').get((request, response) => {
+    response.send(getUserPlanForToday(request.params['username']));
+});
+
+
+app.route('/api/plans/:username').post((request, response) => {
+    response.send(addPlan(request.params['username'], request.body));
+});
+
+app.route('/api/plans/:username').delete((request, response) => {
+    response.send(deleteUserPlansForToday(request.params['username']));
 });
 
 app.listen(3000, () => {

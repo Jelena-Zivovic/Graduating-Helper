@@ -85,8 +85,10 @@ export class NewSubjectComponent implements OnInit {
       else {
         console.log('Subject is entered.');
         this.form.reset();
-        //needs fixing, just reloading component
-        window.location.reload();
+
+        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+          this.router.navigate(['/learning']);
+        });
         
 
       }
