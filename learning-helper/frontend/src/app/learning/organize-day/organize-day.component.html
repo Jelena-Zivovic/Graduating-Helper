@@ -17,7 +17,8 @@
     <br>
     <button mat-raised-button 
             color="primary"
-            (click)="submit(subjects._value)">
+            (click)="submit(subjects._value)"
+            [disabled]="subjectsForToday.length === 0 ? true : false">
         Organize
     </button>
 </div>

@@ -30,12 +30,14 @@ export class UserInfoComponent implements OnInit {
 
   ngOnInit(): void {
    this.subUserInfo = this.authService.getUserInfo(localStorage.getItem('username')).subscribe(ret => {
+     if (ret !== null) {
       this.userInfo = {
         firstName: ret.firstName,
         lastName: ret.lastName,
         username: ret.username,
         email: ret.email
       }
+     }
     });
 
     this.subSubjects = this.organizerService.getUserSubjects(localStorage.getItem('username')).subscribe(ret => {
@@ -93,6 +95,16 @@ export class UserInfoComponent implements OnInit {
     this.organizerService.deleteSubject(localStorage.getItem('username'), subject.id)
       .subscribe(ret => {
       });
+
+    this.organizerService.deletePlan(localStorage.getItem('username'), subject.id)
+      .subscribe(ret => {
+        if (ret === true){
+          console.log('plan deleted');
+        }
+        else{
+          console.log("error");
+        }
+      })
     
       this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
         this.router.navigate(['/learning']);

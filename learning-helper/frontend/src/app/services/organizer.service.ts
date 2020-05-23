@@ -131,6 +131,6 @@ export class OrganizerService {
   }
 
   deletePlan(username, id) {
-    return this.http.delete('http://localhost:3000/plans/' + username + '/' + id);
+    return this.http.delete('http://localhost:3000/api/plans/' + username + '/' + id);
   }
 }

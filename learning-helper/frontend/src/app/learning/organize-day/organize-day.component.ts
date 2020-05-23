@@ -145,19 +145,21 @@ export class OrganizeDayComponent implements OnInit {
       
     });
 
-
-    document.getElementById(subject.id.toString()).style.display = 'none';    
-    this.organizerService.deletePlan(localStorage.getItem('username'), subject.id)
-      .subscribe(ret => {
-        console.log(ret);
-      });
-
-    
-
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
       this.router.navigate(['/learning']);
       LearningComponent.activeTab = 1;
     });
+
+
+    document.getElementById(subject.id.toString()).style.display = 'none';    
+    this.organizerService.deletePlan(localStorage.getItem('username'), subject.id)
+      .subscribe(ret => {
+        LearningComponent.activeTab = 1;
+      });
+
+    
+
+    
 
     
   }

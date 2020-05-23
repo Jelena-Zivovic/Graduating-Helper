@@ -222,7 +222,6 @@ function deleteSubject(username, id) {
                 if (username === subjects[i].username) {
                     subjects[i].subjects = userSubjects.subjects;
                     fs.writeFile('subjects.json', JSON.stringify(subjects), () => {});
-                    deletePlan(username, id);
                     return true;
                 }
             }
@@ -242,7 +241,6 @@ function deletePlan(username, id) {
         return p.username === username;
     });
 
-    
     
     if (userPlans !== undefined) {
         let planToDelete = userPlans.plans.find(p => {
@@ -472,8 +470,10 @@ app.route('/api/subjects/:username/:id').delete((request, response) => {
 });
 
 app.route('/api/plans/:username/:id').delete((request, response) => {
+    console.log(request.params['username']);
+    console.log(request.params['id']);
     response.send(deletePlan(request.params['username'], request.params['id']));
-})
+});
 
 app.listen(3000, () => {
     console.log("server is active at: localhost:3000");
