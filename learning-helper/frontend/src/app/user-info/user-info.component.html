@@ -34,7 +34,8 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let subject of userSubjects">
+                <tr *ngFor="let subject of userSubjects"
+                    id="row{{subject.id}}">
                     <td> {{subject.subjectName}} </td>
                     <td> {{subject.examDate}} </td>
                     <td> {{subject.typeOfExam}} </td>
@@ -48,6 +49,12 @@
                             [value]="calculateValue(subject.id)"
                             [diameter]="30">
                         </mat-progress-spinner>
+                    </td>
+                    <td>
+                        <button mat-stroked-button 
+                                (click)="deleteSubject(subject)">
+                            Delete
+                        </button>
                     </td>
                 </tr>
             </tbody>

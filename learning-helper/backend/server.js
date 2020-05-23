@@ -189,11 +189,11 @@ function changeProgress(username, idSubject, progressMade) {
         }
         else {
             subjectToChange.progress += progressMade;
-            if (subjectToChange.progress === subjectToChange.quantityOfMaterial) {
-                let index = userSubjects.find(s => {
-                    deleteSubject(username, subjectToChange);
-                    deletePlan(username, subjectToChange);
-                });
+            if (subjectToChange.progress >= subjectToChange.quantityOfMaterial) {
+                
+                console.log('time to delete this');
+                deletePlan(username, subjectToChange.id);
+                
                 
             }
             
@@ -202,49 +202,74 @@ function changeProgress(username, idSubject, progressMade) {
     }
 }
 
-function deleteSubject(username, subject) {
+function deleteSubject(username, id) {
     let userSubjects = subjects.find(s => {
         return s.username === username;
     });
+    
+    if (userSubjects !== undefined) {
+        let subjectToDelete = userSubjects.subjects.find(s => {
+            
+            return s.id === Number(id);
+        });
+        
 
-    let index = userSubjects.indexOf(subject);
-    userSubjects.splice(index, 1);
+        if (subjectToDelete !== undefined) {
+            let index = userSubjects.subjects.indexOf(subjectToDelete);
+            userSubjects.subjects.splice(index, 1);
 
-    for (let i = 0; i < subjects.length; i++) {
-        if (username === subjects[i].username) {
-            subjects[i].subjects = userSubjects;
-            fs.writeFile('subjects.json', JSON.stringify(subjects), () => {});
-            return;
+            for (let i = 0; i < subjects.length; i++) {
+                if (username === subjects[i].username) {
+                    subjects[i].subjects = userSubjects.subjects;
+                    fs.writeFile('subjects.json', JSON.stringify(subjects), () => {});
+                    deletePlan(username, id);
+                    return true;
+                }
+            }
         }
+        else {
+            return false;
+        } 
     }
+    else {
+        return false;
+    }
+
 }
 
-function deletePlan(username, subject) {
+function deletePlan(username, id) {
     let userPlans = plans.find(p => {
         return p.username === username;
     });
 
-    let tmp = [];
+    if (userPlans !== undefined) {
+        let planToDelete = userPlans.plans.find(p => {
+            p.id === Number(id);
+        });
 
-    for (let i = 0; i < userPlans.plans.length; i++) {
-        if ((subject.id === userPlans.plans[i].id) &&
-           (subject.subjectName === userPlans.plans[i].subjectName) && 
-           (subject.materialType === userPlans.plans[i].materialType) &&
-           (subject.typeOfExam === userPlans.plans[i].typeOfExam)) {
-            continue;
+        if (planToDelete !== undefined) {
+            let index = userPlans.plans.indexOf(planToDelete);
+            userPLans.plans.splice(index, 1);
+
+            for (let i = 0; i < plans.length; i++) {
+                if (username === plans[i].username) {
+                    plans[i].plans = userPlans.plans;
+                    fs.writeFile('plans.json', JSON.stringify(plans), () => {});
+                    return true;
+                }
+
+            }
         }
         else {
-            tmp.push(userPlans.plans[i]);
+            return false;
         }
-    }
 
-    for (let i = 0; i < plans.length; i++) {
-        if (username === plans[i].username) {
-            plans[i].plans = tmp;
-            fs.writeFile('plans.json', JSON.stringify(plans), () => {});
-            return;
-        }
+        
     }
+    else {
+        return false;
+    }
+    
 }
 
 
@@ -365,6 +390,7 @@ function deleteUserPlansForToday(username) {
     let index = plans.indexOf(planUser);
     plans.splice(index, 1);
     fs.writeFile('plans.json', JSON.stringify(plans), () => {});
+    
     return true;
 
 }
@@ -430,6 +456,14 @@ app.route('/api/plans/:username').post((request, response) => {
 app.route('/api/plans/:username').delete((request, response) => {
     response.send(deleteUserPlansForToday(request.params['username']));
 });
+
+app.route('/api/subjects/:username/:id').delete((request, response) => {
+    response.send(deleteSubject(request.params['username'], request.params['id']));
+});
+
+app.route('/api/plans/:username/:id').delete((request, response) => {
+    response.send(deletePlan(request.params['username'], request.params['id']));
+})
 
 app.listen(3000, () => {
     console.log("server is active at: localhost:3000");

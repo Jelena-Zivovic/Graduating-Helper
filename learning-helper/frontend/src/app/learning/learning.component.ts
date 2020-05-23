@@ -12,8 +12,8 @@ export class LearningComponent implements OnInit {
   
 
   constructor(private authService: AuthenticationService) { }
-
-  activeTab = 1;
+  
+  static activeTab: number;
 
   ngOnInit(): void {
   }
@@ -21,6 +21,14 @@ export class LearningComponent implements OnInit {
   isUserLoggedIn() {
     return this.authService.isUserLoggedIn();
     
+  }
+
+  selectActiveTab(tabActive: number) {
+   
+  }
+
+  whichActiveTab() {
+    return LearningComponent.activeTab;
   }
 
   

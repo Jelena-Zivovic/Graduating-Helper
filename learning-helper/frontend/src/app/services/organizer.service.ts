@@ -62,7 +62,15 @@ export class OrganizerService {
     }
 
     let daysForPreparing = daysUntilExam - daysForRepeating;
+    if (daysForPreparing < 0) {
+      daysForRepeating = 0;
+      daysForPreparing = daysUntilExam;
+    }
+    
     let materialLeft = subject.quantityOfMaterial - subject.progress;
+    if (materialLeft <= 0) {
+      this.deleteSubject(localStorage.getItem('username'), subject.id);
+    }
 
     if (subject.materialType === 'book') {
       return {
@@ -118,6 +126,11 @@ export class OrganizerService {
     return this.http.delete('http://localhost:3000/api/plans/' + username);
   }
 
+  deleteSubject(username, id) {
+    return this.http.delete('http://localhost:3000/api/subjects/' +username + '/' + id);
+  }
 
-
+  deletePlan(username, id) {
+    return this.http.delete('http://localhost:3000/plans/' + username + '/' + id);
+  }
 }

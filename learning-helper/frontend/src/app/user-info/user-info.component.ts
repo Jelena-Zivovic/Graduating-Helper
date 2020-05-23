@@ -3,6 +3,7 @@ import { AuthenticationService } from './../services/authentication.service';
 import { Component, OnInit } from '@angular/core';
 import { OrganizerService } from '../services/organizer.service';
 import { Subscription } from 'rxjs';
+import { LearningComponent } from '../learning/learning.component';
 
 @Component({
   selector: 'learn-user-info',
@@ -85,6 +86,18 @@ export class UserInfoComponent implements OnInit {
         return value;
       }
     }
+  }
+
+  deleteSubject(subject) {
+    document.getElementById('row' + subject.id).style.display = 'none';
+    this.organizerService.deleteSubject(localStorage.getItem('username'), subject.id)
+      .subscribe(ret => {
+        console.log(ret);
+      });
+      this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+        this.router.navigate(['/learning']);
+        LearningComponent.activeTab = 2;
+      });
   }
 
   ngOnDestroy() {

@@ -1,9 +1,8 @@
-import { MatStepperModule } from '@angular/material/stepper';
-import { UserInfoComponent } from './../../user-info/user-info.component';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { OrganizerService } from 'src/app/services/organizer.service';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { LearningComponent } from '../learning.component';
 
 @Component({
   selector: 'learn-organize-day',
@@ -12,7 +11,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class OrganizeDayComponent implements OnInit {
 
-  @Input() activeTab: number;
+  @Output() whichTabIsActive: EventEmitter<any> = new EventEmitter<any>();
 
   subjectsForToday =  [];
   isSelected = localStorage.getItem('enteredPlan')  === 'true' ? true : false;
@@ -28,6 +27,7 @@ export class OrganizeDayComponent implements OnInit {
     
   }
 
+
   ngOnInit(): void {
     this.subSubjects = this.organizerService.getUserSubjects(localStorage.getItem('username'))
         .subscribe(ret => {
@@ -39,6 +39,10 @@ export class OrganizeDayComponent implements OnInit {
             this.planForToday = ret as [];
           }
         });
+  }
+
+  public chooseTab(tabActive: number) {
+    this.whichTabIsActive.emit(tabActive);
   }
 
   getMaterialForToday(id) {
@@ -73,10 +77,15 @@ export class OrganizeDayComponent implements OnInit {
     localStorage.setItem('enteredPlan', 'true');
     this.isSelected = true;
 
+    
+
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
       this.router.navigate(['/learning']);
+      LearningComponent.activeTab = 1;
     });
-    this.activeTab = 1;
+
+    
+    
     
   }
 
@@ -86,10 +95,14 @@ export class OrganizeDayComponent implements OnInit {
     localStorage.removeItem('enteredPlan');
     localStorage.setItem('enteredPlan', 'false');
   
+    
+
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
       this.router.navigate(['/learning']);
+      LearningComponent.activeTab = 1;
     });
-    this.activeTab = 1;
+
+    
   }
 
   getQuantityForTodayMessage(id) {
@@ -126,31 +139,31 @@ export class OrganizeDayComponent implements OnInit {
 
   subjectDone(subject) {
     
-    //TODO: row from the table must dissapear
-
     this.organizerService.updateSubject(localStorage.getItem('username'), Number(subject.id), Number(subject.materialForToday))
           .subscribe(ret => {
       
     });
 
-    for (let i = 0; i < this.planForToday.length; i++) {
-      if (subject.id === this.planForToday[i].id) {
-        this.planForToday.splice(i, 1);
-        break;
-      }
-    }
 
     document.getElementById(subject.id.toString()).style.display = 'none';    
+    this.organizerService.deletePlan(localStorage.getItem('username'), subject.id)
+      .subscribe(ret => {
+        console.log(ret);
+      });
 
-    /*this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+    
+
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
       this.router.navigate(['/learning']);
-    });*/
-    this.activeTab = 2;
+      LearningComponent.activeTab = 1;
+    });
 
+    
   }
 
   ngOnDestroy() {
     this.subSubjects.unsubscribe();
+    
   }
 
 }
