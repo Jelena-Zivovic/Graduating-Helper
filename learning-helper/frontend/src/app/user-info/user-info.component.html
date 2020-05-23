@@ -7,11 +7,6 @@
     <p class="user"><i>Username:</i> {{userInfo.username}} </p>
     <p class="user"><i>Email:</i> {{userInfo.email}} </p>
     <button mat-button 
-            (click)="changeData()" 
-            class="userButtons">
-        Change data
-    </button>
-    <button mat-button 
             (click)="deleteAccount()" 
             class="userButtons">
         Delete account
@@ -37,7 +32,7 @@
                 <tr *ngFor="let subject of userSubjects"
                     id="row{{subject.id}}">
                     <td> {{subject.subjectName}} </td>
-                    <td> {{subject.examDate}} </td>
+                    <td> {{subject.examDate | date}}</td>
                     <td> {{subject.typeOfExam}} </td>
                     <td> {{subject.materialType}} </td>
                     <td> {{subject.quantityOfMaterial}} </td>

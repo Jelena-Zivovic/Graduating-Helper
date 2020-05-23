@@ -156,17 +156,12 @@ export class OrganizeDayComponent implements OnInit {
       .subscribe(ret => {
         LearningComponent.activeTab = 1;
       });
-
-    
-
-    
-
     
   }
 
   ngOnDestroy() {
     this.subSubjects.unsubscribe();
-    
+    this.subPlan.unsubscribe();
   }
 
 }

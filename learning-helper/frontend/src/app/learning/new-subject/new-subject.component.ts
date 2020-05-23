@@ -43,10 +43,9 @@ export class NewSubjectComponent implements OnInit {
   }
 
   checkExamDate() {
-    let examDate = new Date(this.form.get('basicInfoGroup').get('examDate').value);
-    let now = new Date();
-    return now < examDate;
+    return !ExamDateValidators.isExamDateValid;
   }
+
 
   isFormCorrect() {
     return !this.form.get('basicInfoGroup').invalid &&
@@ -83,7 +82,6 @@ export class NewSubjectComponent implements OnInit {
         alert('Subject already exists.');
       }
       else {
-        console.log('Subject is entered.');
         this.form.reset();
 
         this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
@@ -92,10 +90,6 @@ export class NewSubjectComponent implements OnInit {
         
 
       }
-
-      
-      
-
     });
   }
 }

@@ -9,8 +9,6 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class LearningComponent implements OnInit {
 
-  
-
   constructor(private authService: AuthenticationService) { }
   
   static activeTab: number;
@@ -23,14 +21,8 @@ export class LearningComponent implements OnInit {
     
   }
 
-  selectActiveTab(tabActive: number) {
-   
-  }
-
   whichActiveTab() {
     return LearningComponent.activeTab;
   }
-
-  
 
 }

@@ -52,7 +52,7 @@ export class UserInfoComponent implements OnInit {
           this.userSubjects.push({
             id: ret[i].id,
             subjectName: ret[i].subjectName,
-            examDate: dateStr,
+            examDate: date,
             typeOfExam: ret[i].typeOfExam,
             materialType: ret[i].materialType,
             quantityOfMaterial: ret[i].quantityOfMaterial,
@@ -62,20 +62,12 @@ export class UserInfoComponent implements OnInit {
           });
         }
       }
-      else {
-        console.log('something went wrong');
-      }
     });
   }
-
-  changeData() {
-
-  }
-
+  
   deleteAccount() {
     if (confirm('Are you sure?')) {
       this.authService.deleteUser(localStorage.getItem('username')).subscribe(() => {
-        console.log('User is deleted'); 
         this.router.navigate(['/']);
       });
     }
@@ -98,12 +90,6 @@ export class UserInfoComponent implements OnInit {
 
     this.organizerService.deletePlan(localStorage.getItem('username'), subject.id)
       .subscribe(ret => {
-        if (ret === true){
-          console.log('plan deleted');
-        }
-        else{
-          console.log("error");
-        }
       })
     
       this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {

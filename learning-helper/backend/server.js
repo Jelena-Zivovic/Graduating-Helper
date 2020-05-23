@@ -190,11 +190,7 @@ function changeProgress(username, idSubject, progressMade) {
         else {
             subjectToChange.progress += progressMade;
             if (subjectToChange.progress >= subjectToChange.quantityOfMaterial) {
-                
-                console.log('time to delete this');
                 deletePlan(username, subjectToChange.id);
-                
-                
             }
             
             return true;
@@ -209,7 +205,6 @@ function deleteSubject(username, id) {
     
     if (userSubjects !== undefined) {
         let subjectToDelete = userSubjects.subjects.find(s => {
-            
             return s.id === Number(id);
         });
         
@@ -256,7 +251,6 @@ function deletePlan(username, id) {
                 for (let i = 0; i < plans.length; i++) {
                     if (username === plans[i].username) {
                         plans[i].plans = userPlans.plans;
-                        console.log(plans);
                         fs.writeFile('plans.json', JSON.stringify(plans), () => {});
                         return true;
                     }
@@ -470,8 +464,6 @@ app.route('/api/subjects/:username/:id').delete((request, response) => {
 });
 
 app.route('/api/plans/:username/:id').delete((request, response) => {
-    console.log(request.params['username']);
-    console.log(request.params['id']);
     response.send(deletePlan(request.params['username'], request.params['id']));
 });
 
