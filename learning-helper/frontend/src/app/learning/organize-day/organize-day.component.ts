@@ -32,7 +32,8 @@ export class OrganizeDayComponent implements OnInit {
     this.subSubjects = this.organizerService.getUserSubjects(localStorage.getItem('username'))
         .subscribe(ret => {
         this.subjectsForToday = (ret as []);
-    });    
+    });   
+
     this.subPlan = this.organizerService.getUserPlan(localStorage.getItem('username'))
         .subscribe(ret => {
           if (ret !== null) {

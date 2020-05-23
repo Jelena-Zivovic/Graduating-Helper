@@ -242,27 +242,37 @@ function deletePlan(username, id) {
         return p.username === username;
     });
 
+    
+    
     if (userPlans !== undefined) {
         let planToDelete = userPlans.plans.find(p => {
-            p.id === Number(id);
+            return p.id === Number(id);
         });
 
         if (planToDelete !== undefined) {
-            let index = userPlans.plans.indexOf(planToDelete);
-            userPLans.plans.splice(index, 1);
+            if (userPlans != undefined) {
+                let index = userPlans.plans.indexOf(planToDelete);
+                userPlans.plans.splice(index, 1);
+                
 
-            for (let i = 0; i < plans.length; i++) {
-                if (username === plans[i].username) {
-                    plans[i].plans = userPlans.plans;
-                    fs.writeFile('plans.json', JSON.stringify(plans), () => {});
-                    return true;
+                for (let i = 0; i < plans.length; i++) {
+                    if (username === plans[i].username) {
+                        plans[i].plans = userPlans.plans;
+                        console.log(plans);
+                        fs.writeFile('plans.json', JSON.stringify(plans), () => {});
+                        return true;
+                    }
+
                 }
-
+            }
+            else {
+                return false;
             }
         }
         else {
             return false;
         }
+            
 
         
     }

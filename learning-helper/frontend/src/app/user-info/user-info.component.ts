@@ -92,8 +92,8 @@ export class UserInfoComponent implements OnInit {
     document.getElementById('row' + subject.id).style.display = 'none';
     this.organizerService.deleteSubject(localStorage.getItem('username'), subject.id)
       .subscribe(ret => {
-        console.log(ret);
       });
+    
       this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
         this.router.navigate(['/learning']);
         LearningComponent.activeTab = 2;
