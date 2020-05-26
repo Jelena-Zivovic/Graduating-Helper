@@ -189,9 +189,9 @@ function changeProgress(username, idSubject, progressMade) {
         }
         else {
             subjectToChange.progress += progressMade;
-            if (subjectToChange.progress >= subjectToChange.quantityOfMaterial) {
-                deletePlan(username, subjectToChange.id);
-            }
+            
+
+            fs.writeFile('subjects.json', JSON.stringify(subjects), () => {});
             
             return true;
         }
