@@ -36,6 +36,7 @@ import { UniqueUsernameDirective } from './directives/unique-username.directive'
 import { NewSubjectComponent } from './learning/new-subject/new-subject.component';
 import { UserInfoComponent } from './user-info/user-info.component';
 import { OrganizeDayComponent } from './learning/organize-day/organize-day.component';
+import { CountPipe } from './pipes/count.pipe';
 
 
 
@@ -52,7 +53,8 @@ import { OrganizeDayComponent } from './learning/organize-day/organize-day.compo
     UniqueUsernameDirective,
     NewSubjectComponent,
     UserInfoComponent,
-    OrganizeDayComponent
+    OrganizeDayComponent,
+    CountPipe
   ],
   imports: [
     BrowserModule,

@@ -25,6 +25,7 @@
                     <th>Material type</th>
                     <th>Quantity of material</th>
                     <th>Days until exam</th>
+                    <th>Learned so far</th>
                     <th>Progress</th>
                 </tr>
             </thead>
@@ -37,11 +38,12 @@
                     <td> {{subject.materialType}} </td>
                     <td> {{subject.quantityOfMaterial}} </td>
                     <td> {{subject.daysUntilExam}} </td>
+                    <td> {{subject.progress}} </td>
                     <td> 
                         <mat-progress-spinner
                             color="primary"
                             mode="determinate"
-                            [value]="calculateValue(subject.id)"
+                            [value]="(100*subject.progress) / subject.quantityOfMaterial"
                             [diameter]="30">
                         </mat-progress-spinner>
                     </td>
@@ -53,5 +55,10 @@
                     </td>
                 </tr>
             </tbody>
+            
         </table>
+        <div id="numberOfSubjects">
+            <b>Number of entered subjects: {{userSubjects | count }}</b>
+        </div>
+        
     </div>

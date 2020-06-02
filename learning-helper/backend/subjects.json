@@ -1,1 +1,1 @@
-[]
+[{"username":"jela","subjects":[{"id":1,"subjectName":"Predmet","examDate":"2020-07-02","typeOfExam":"practical","complexityLevel":"somewhatHard","materialType":"videoLessons","quantityOfMaterial":13,"progress":3},{"id":2,"subjectName":"bla","examDate":"2020-07-10","typeOfExam":"practical","complexityLevel":"somewhatHard","materialType":"book","quantityOfMaterial":200,"progress":6}]}]
