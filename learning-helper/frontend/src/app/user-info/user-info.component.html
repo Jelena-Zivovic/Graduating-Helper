@@ -31,7 +31,11 @@
             </thead>
             <tbody>
                 <tr *ngFor="let subject of userSubjects"
-                    id="row{{subject.id}}">
+                    id="{{'row' + subject.id}}"
+                    learnWarning
+                    [currentSubject]="subject"
+                    matTooltip=""
+                    >
                     <td> {{subject.subjectName}} </td>
                     <td> {{subject.examDate | date}}</td>
                     <td> {{subject.typeOfExam}} </td>

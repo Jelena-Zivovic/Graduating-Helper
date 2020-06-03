@@ -6,6 +6,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -20,6 +21,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatListModule } from '@angular/material/list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -37,6 +39,7 @@ import { NewSubjectComponent } from './learning/new-subject/new-subject.componen
 import { UserInfoComponent } from './user-info/user-info.component';
 import { OrganizeDayComponent } from './learning/organize-day/organize-day.component';
 import { CountPipe } from './pipes/count.pipe';
+import { WarningDirective } from './directives/warning.directive';
 
 
 
@@ -54,7 +57,8 @@ import { CountPipe } from './pipes/count.pipe';
     NewSubjectComponent,
     UserInfoComponent,
     OrganizeDayComponent,
-    CountPipe
+    CountPipe,
+    WarningDirective
   ],
   imports: [
     BrowserModule,
@@ -75,7 +79,9 @@ import { CountPipe } from './pipes/count.pipe';
     MatDatepickerModule,
     MatRadioModule,
     MatListModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    CommonModule,
+    MatTooltipModule
   ],
   providers: [
     AuthenticationService,
