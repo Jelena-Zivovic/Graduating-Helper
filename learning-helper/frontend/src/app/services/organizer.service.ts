@@ -50,6 +50,19 @@ export class OrganizerService {
 
   organizeSubjectForToday(subject) {
     let daysUntilExam = this.calculateDaysUntilExam(subject.examDate);
+
+    if (daysUntilExam === 0) {
+      return {
+        id: subject.id,
+        subjectName: subject.subjectName,
+        materialForToday: subject.quantityOfMaterial,
+        materialType: subject.materialType,
+        typeOfExam: subject.typeOfExam,
+        daysForRepeating: 0
+      }
+     
+    }
+
     let daysForRepeating = 0;
     if (subject.complexityLevel === 'easy') {
       daysForRepeating = 2;
@@ -79,7 +92,7 @@ export class OrganizerService {
         materialForToday: Math.ceil(materialLeft / daysForPreparing),
         materialType: subject.materialType,
         typeOfExam: subject.typeOfExam,
-        daysForRepeating: daysForRepeating
+        daysForRepeating: daysUntilExam <= 2 ? 0 : daysForRepeating
       }
     }
     else {
@@ -92,7 +105,7 @@ export class OrganizerService {
           materialForToday: 1,
           materialType: subject.materialType,
           typeOfExam: subject.typeOfExam,
-          daysForRepeating: daysForRepeating +  (daysForPreparing - materialLeft)
+          daysForRepeating: daysUntilExam <= 2 ? 0 : (daysForRepeating +  (daysForPreparing - materialLeft))
         }
       }
       else {
@@ -102,7 +115,7 @@ export class OrganizerService {
           materialForToday: Math.ceil(materialLeft / daysForPreparing),
           materialType: subject.materialType,
           typeOfExam: subject.typeOfExam,
-          daysForRepeating: daysForRepeating
+          daysForRepeating: daysUntilExam <= 2 ? 0 : daysForRepeating
         }
 
       }
