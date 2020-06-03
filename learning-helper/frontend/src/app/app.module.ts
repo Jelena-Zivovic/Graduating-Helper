@@ -22,6 +22,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatListModule } from '@angular/material/list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -40,6 +41,7 @@ import { UserInfoComponent } from './user-info/user-info.component';
 import { OrganizeDayComponent } from './learning/organize-day/organize-day.component';
 import { CountPipe } from './pipes/count.pipe';
 import { WarningDirective } from './directives/warning.directive';
+import { NoMoreLearningDirective } from './directives/no-more-learning.directive';
 
 
 
@@ -58,7 +60,8 @@ import { WarningDirective } from './directives/warning.directive';
     UserInfoComponent,
     OrganizeDayComponent,
     CountPipe,
-    WarningDirective
+    WarningDirective,
+    NoMoreLearningDirective
   ],
   imports: [
     BrowserModule,
@@ -81,7 +84,8 @@ import { WarningDirective } from './directives/warning.directive';
     MatListModule,
     MatProgressSpinnerModule,
     CommonModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatGridListModule
   ],
   providers: [
     AuthenticationService,

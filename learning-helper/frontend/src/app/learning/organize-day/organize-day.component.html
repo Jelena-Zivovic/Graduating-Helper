@@ -7,7 +7,9 @@
     <mat-selection-list id="listOfSubjects"
                         #subjects>
         <mat-list-option *ngFor="let subject of subjectsForToday" 
-                         value="{{subject.id}}"> 
+                         value="{{subject.id}}"
+                         learnNoMoreLearning
+                         [currentSubject]="subject"> 
                 {{subject.subjectName}}, {{getQuantityForTodayMessage(subject.id)}}
         </mat-list-option>
     

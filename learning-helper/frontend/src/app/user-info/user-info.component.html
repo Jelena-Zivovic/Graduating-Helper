@@ -14,7 +14,19 @@
     </div>
     <mat-divider [vertical]="true" id="divider"></mat-divider>
     <div id="userSubjects">
-        <p class="subjects"><b>User's subjects:</b></p>
+        <div>
+            <p class="subjects"><b>User's subjects:</b></p>
+            <div  id="legend" >
+                <mat-grid-list cols="2" rows="1" rowHeight="50px" matTooltip="legend">
+                    <mat-grid-tile [style.background]="'#ff2a2e'"><i>Low amount of time for preparing an exam</i></mat-grid-tile>
+                    <mat-grid-tile [style.background]="'#00ff58'"><i>Only repeating left</i></mat-grid-tile>
+                    
+                  </mat-grid-list>
+            </div>
+            
+              
+        </div>
+        
         <mat-divider></mat-divider>
         <table class="subjects" class="table table-hover">
             <thead>
@@ -33,9 +45,7 @@
                 <tr *ngFor="let subject of userSubjects"
                     id="{{'row' + subject.id}}"
                     learnWarning
-                    [currentSubject]="subject"
-                    matTooltip=""
-                    >
+                    [currentSubject]="subject">
                     <td> {{subject.subjectName}} </td>
                     <td> {{subject.examDate | date}}</td>
                     <td> {{subject.typeOfExam}} </td>
@@ -64,5 +74,7 @@
         <div id="numberOfSubjects">
             <b>Number of entered subjects: {{userSubjects | count }}</b>
         </div>
+        <mat-divider></mat-divider>
+        
         
     </div>

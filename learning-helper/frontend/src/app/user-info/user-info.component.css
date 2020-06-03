@@ -33,3 +33,10 @@
     left: 325px;
 }
 
+#legend {
+    position: relative;
+    width: 600px;
+    left: 200px;
+    bottom: 30px;;
+}
+

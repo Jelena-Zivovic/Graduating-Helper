@@ -21,6 +21,7 @@ export class UserInfoComponent implements OnInit {
 
   userSubjects = [];
 
+
   private subUserInfo: Subscription;
   private subSubjects: Subscription;
 
@@ -61,7 +62,8 @@ export class UserInfoComponent implements OnInit {
       }
     });
   }
-  
+
+ 
   deleteAccount() {
     if (confirm('Are you sure?')) {
       this.authService.deleteUser(localStorage.getItem('username')).subscribe(() => {
