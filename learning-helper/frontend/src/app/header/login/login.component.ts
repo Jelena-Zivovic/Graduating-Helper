@@ -1,7 +1,7 @@
 import { Validators, FormGroup, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthenticationService } from './../../services/authentication.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'learn-login',
@@ -10,10 +10,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
+  @Output() onLogin: EventEmitter<any> = new EventEmitter<any>();
+
   form = new FormGroup({
     username: new FormControl('', [Validators.required]), 
     password: new FormControl('', [Validators.required])
-  })
+  });
 
   constructor(private authService: AuthenticationService, private router: Router) { }
 
@@ -28,21 +30,21 @@ export class LoginComponent implements OnInit {
       }
       else {
         if (ret.password === this.form.get('password').value) {
+          
           this.router.navigate(["/learning"]);
           localStorage.setItem("username", ret.username);
+          this.onLogin.emit(true);
+          
         }
         else {
           alert("wrong password");
+          this.onLogin.emit(false);
         }
       }
     });
   }
 
-  isUsedLoggedIn() {
-    return this.authService.isUserLoggedIn();
-  }
+  
 
-  logoutUser() {
-    this.authService.logout();
-  }
+ 
 }

@@ -10,10 +10,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
   
+  userLogged: boolean = localStorage.length > 0;
+
   constructor(private authService : AuthenticationService) { }
 
   isUserLoggedIn() {
     return this.authService.isUserLoggedIn();
+  }
+
+  displayUsername(userLogged: boolean) {
+    this.userLogged = userLogged;
   }
 
   ngOnInit(): void {
