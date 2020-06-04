@@ -9,17 +9,14 @@
         <mat-list-option *ngFor="let subject of subjectsForToday" 
                          value="{{subject.id}}"
                          learnNoMoreLearning
-                         [currentSubject]="subject"> 
+                         [currentSubject]="subject">
                 {{subject.subjectName}}, {{getQuantityForTodayMessage(subject.id)}}
         </mat-list-option>
     
     </mat-selection-list>
     <br>
     <mat-divider></mat-divider>
-    <br>
-    <div>
-        <b>Number of assignments: {{subjectsForToday | count}}</b>
-    </div>
+    
     <br>
     <button mat-raised-button 
             color="primary"
