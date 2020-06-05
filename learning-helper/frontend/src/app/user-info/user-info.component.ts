@@ -1,6 +1,6 @@
 import { Router } from '@angular/router';
 import { AuthenticationService } from './../services/authentication.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { OrganizerService } from '../services/organizer.service';
 import { Subscription } from 'rxjs';
 import { LearningComponent } from '../learning/learning.component';
@@ -11,6 +11,8 @@ import { LearningComponent } from '../learning/learning.component';
   styleUrls: ['./user-info.component.css']
 })
 export class UserInfoComponent implements OnInit {
+
+  
 
   userInfo = {
     firstName: "",
@@ -24,6 +26,8 @@ export class UserInfoComponent implements OnInit {
 
   private subUserInfo: Subscription;
   private subSubjects: Subscription;
+
+  indicator = false;
 
   constructor(private authService: AuthenticationService,
               private organizerService: OrganizerService,
@@ -87,6 +91,18 @@ export class UserInfoComponent implements OnInit {
         LearningComponent.activeTab = 2;
       });
   }
+
+  changeData() {
+    this.indicator = !this.indicator;
+  }
+
+  reloadComponent(value: boolean) {
+    console.log("nesto");
+    if (value) {
+      console.log("Component needs to be reloaded");
+    }
+  }
+  
 
   ngOnDestroy() {
     this.subUserInfo.unsubscribe();

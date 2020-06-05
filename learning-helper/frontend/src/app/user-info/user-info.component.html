@@ -1,5 +1,5 @@
 
-<div id="userInfo">
+<div id="userInfo" (dataChanged)="reloadComponent($event)">
     <p class="user"><b>User info:</b></p>
     <mat-divider></mat-divider>
     <p class="user"><i>First name:</i> {{userInfo.firstName}} </p>
@@ -11,6 +11,14 @@
             class="userButtons">
         Delete account
     </button>
+    <button mat-button
+        (click)="changeData()"
+        class="userButtons">
+        Change data
+    </button>
+
+    <learn-change-user-info *ngIf="indicator"></learn-change-user-info>
+
     </div>
     <mat-divider [vertical]="true" id="divider"></mat-divider>
     <div id="userSubjects">

@@ -1,0 +1,11 @@
+#errorPasswords {
+    position: relative;
+    left: 230px;
+    font-style: italic;
+}
+
+#errorUsername {
+    position: relative;
+    left: 230px;
+    font-style: italic;
+}

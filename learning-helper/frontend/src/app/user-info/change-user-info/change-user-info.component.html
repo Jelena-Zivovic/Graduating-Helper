@@ -1,0 +1,56 @@
+<form [formGroup]="changeDataForm" (ngSubmit)="change(changeDataForm.value)">
+    <mat-form-field>
+        <mat-label>First name:</mat-label>
+        <input matInput 
+               type="text" 
+               formControlName="firstName">
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <mat-label>Last name:</mat-label>
+        <input matInput 
+               type="text" 
+               formControlName="lastName">
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <mat-label>Username:</mat-label>
+        <input matInput 
+               learnUniqueUsername 
+               type="text" 
+               formControlName="username">
+        <p id="errorUsername"></p>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <mat-label>Email:</mat-label>
+        <input matInput 
+               type="email" 
+               formControlName="email">
+        <mat-error *ngIf="changeDataForm.get('email').touched && changeDataForm.get('email').invalid">Invalid email</mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <mat-label>Password:</mat-label>
+        <input matInput 
+               type="password" 
+               formControlName="password" >
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <mat-label>Repeat password:</mat-label>
+        <input learnSamePasswords
+               [enteredPassword]="changeDataForm.get('password').value"
+               matInput 
+               type="password" 
+               formControlName="repeatedPassword">
+        <mat-error>Please repeat your password</mat-error>
+        <p id="errorPasswords"></p>
+
+    </mat-form-field>
+    <br>
+    <button mat-button 
+            type="submit" 
+            
+    >Change</button>
+</form>

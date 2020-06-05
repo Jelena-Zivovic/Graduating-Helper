@@ -42,6 +42,7 @@ import { OrganizeDayComponent } from './learning/organize-day/organize-day.compo
 import { CountPipe } from './pipes/count.pipe';
 import { WarningDirective } from './directives/warning.directive';
 import { NoMoreLearningDirective } from './directives/no-more-learning.directive';
+import { ChangeUserInfoComponent } from './user-info/change-user-info/change-user-info.component';
 
 
 
@@ -61,7 +62,8 @@ import { NoMoreLearningDirective } from './directives/no-more-learning.directive
     OrganizeDayComponent,
     CountPipe,
     WarningDirective,
-    NoMoreLearningDirective
+    NoMoreLearningDirective,
+    ChangeUserInfoComponent
   ],
   imports: [
     BrowserModule,

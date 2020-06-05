@@ -25,4 +25,6 @@ export class LearningComponent implements OnInit {
     return LearningComponent.activeTab;
   }
 
+  
+
 }
