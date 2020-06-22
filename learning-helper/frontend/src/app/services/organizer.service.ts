@@ -1,4 +1,3 @@
-import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
@@ -28,7 +27,9 @@ export interface Plan {
 })
 export class OrganizerService {
 
+
   constructor(private http: HttpClient) { }
+
 
   addSubjectForUser(username, subject) {
     return this.http.post('http://localhost:3000/api/subjects/' + username, subject);
@@ -82,7 +83,8 @@ export class OrganizerService {
     
     let materialLeft = subject.quantityOfMaterial - subject.progress;
     if (materialLeft <= 0) {
-      this.deleteSubject(localStorage.getItem('username'), subject.id);
+      this.deleteSubject(localStorage.getItem('username'), subject.id).subscribe(() => {});
+      return;
     }
 
     if (subject.materialType === 'book') {
