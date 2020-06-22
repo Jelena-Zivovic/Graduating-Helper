@@ -57,11 +57,12 @@ function changeUserInfo(username, newUserInfo) {
     });
 
     if (result !== undefined) {
-        users[i].username = newUserInfo.username;
-        users[i].firstName = newUserInfo.firstName;
-        users[i].lastName = newUserInfo.lastName;
-        users[i].email = newUserInfo.email;
-        users[i].password = newUserInfo.password;
+        result.username = newUserInfo.username;
+        result.firstName = newUserInfo.firstName;
+        result.lastName = newUserInfo.lastName;
+        result.email = newUserInfo.email;
+        result.password = newUserInfo.password;
+        result.repeatedPassword = newUserInfo.repeatedPassword
 
         fs.writeFile('users.json', JSON.stringify(users), () => {});
         return true;

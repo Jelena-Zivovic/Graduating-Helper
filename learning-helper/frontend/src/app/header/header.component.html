@@ -9,8 +9,8 @@
                  *ngIf="userLogged ? false : true"  
                  id="loginRegisterContainer">
     </learn-login>
-    <learn-user (onLogin)="displayUsername($event)" 
-                *ngIf="userLogged ? true : false" 
+    <learn-user *ngIf="userLogged ? true : false" 
+                (onLogin)="displayUsername($event)" 
                 id="userLoggedContainer">
     </learn-user>
 </div>
