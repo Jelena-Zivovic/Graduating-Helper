@@ -1,6 +1,6 @@
 import { Router } from '@angular/router';
 import { AuthenticationService } from './../../services/authentication.service';
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 
 
 @Component({
@@ -10,7 +10,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 })
 export class UserComponent implements OnInit {
 
-  @Output() onLogin: EventEmitter<any> = new EventEmitter<any>();
+
 
   constructor(private authService: AuthenticationService, private router: Router) { }
 
@@ -26,7 +26,6 @@ export class UserComponent implements OnInit {
     this.authService.logout();
     
     this.router.navigate(["/"]);
-    this.onLogin.emit(false);
   }
 
 }

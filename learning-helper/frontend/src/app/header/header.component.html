@@ -5,12 +5,10 @@
             Learning helper
         </h1>
     </div>
-    <learn-login (onLogin)="displayUsername($event)" 
-                 *ngIf="userLogged ? false : true"  
+    <learn-login *ngIf="isUserLoggedIn() ? false : true"
                  id="loginRegisterContainer">
     </learn-login>
-    <learn-user *ngIf="userLogged ? true : false" 
-                (onLogin)="displayUsername($event)" 
+    <learn-user *ngIf="isUserLoggedIn() ? true : false"
                 id="userLoggedContainer">
     </learn-user>
 </div>

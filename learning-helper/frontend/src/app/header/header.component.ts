@@ -10,7 +10,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
   
-  userLogged: boolean = localStorage.length > 0;
+  userLogged: boolean;
 
   constructor(private authService : AuthenticationService) { }
 
@@ -22,7 +22,12 @@ export class HeaderComponent implements OnInit {
     this.userLogged = userLogged;
   }
 
+  userLoggedIn() {
+    return this.authService.isUserLoggedIn();
+  }
+
   ngOnInit(): void {
+    this.userLogged = localStorage.length > 0;
   }
 
 }
