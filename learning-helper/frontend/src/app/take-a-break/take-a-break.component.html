@@ -1,0 +1,11 @@
+<br><br>
+<div id="takeABreakContainer">
+    <mat-card>
+        <p>What do you want to do?</p>
+        <button mat-flat-button (click)="playGame()">Play a game</button>
+        <button mat-flat-button (click)="listenMusic()">Listen to music</button>
+        
+    </mat-card>
+    <br><br>
+    <learn-link [link]="typeOfActivity" [chosenActivity]="isActivityChosen"></learn-link>
+</div>

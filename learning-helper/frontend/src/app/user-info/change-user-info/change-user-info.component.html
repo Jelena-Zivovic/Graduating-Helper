@@ -34,7 +34,8 @@
                [enteredPassword]="changeDataForm.get('password').value"
                matInput 
                type="password" 
-               formControlName="repeatedPassword">
+               formControlName="repeatedPassword"
+               [disabled]="!changeDataForm.get('password').touched">
         <mat-error>Please repeat your password</mat-error>
         <p id="errorPasswords"></p>
 

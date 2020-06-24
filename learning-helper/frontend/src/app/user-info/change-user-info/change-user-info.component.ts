@@ -11,8 +11,6 @@ import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 })
 export class ChangeUserInfoComponent implements OnInit {
 
-  @Input() indicator: boolean = false;
-  @Output() dataChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   changeDataForm = new FormGroup({
     firstName: new FormControl(),
@@ -45,6 +43,8 @@ export class ChangeUserInfoComponent implements OnInit {
         repeatedPassword: (data.repeatedPassword === null || data.repeatedPassword === "") ? currentUserInfo.password : data.repeatedPassword
 
       };
+
+      
 
       this.authService.updateUserInfo(newUserInfo.username, newUserInfo).subscribe((ret) => {
         if (ret) {

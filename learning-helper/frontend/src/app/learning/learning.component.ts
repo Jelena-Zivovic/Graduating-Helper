@@ -18,7 +18,6 @@ export class LearningComponent implements OnInit {
 
   isUserLoggedIn() {
     return this.authService.isUserLoggedIn();
-    
   }
 
   whichActiveTab() {

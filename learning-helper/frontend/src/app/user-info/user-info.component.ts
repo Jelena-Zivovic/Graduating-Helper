@@ -21,7 +21,6 @@ export class UserInfoComponent implements OnInit {
 
   userSubjects = [];
 
-
   private subUserInfo: Subscription;
   private subSubjects: Subscription;
 
@@ -93,6 +92,8 @@ export class UserInfoComponent implements OnInit {
   changeData() {
     this.indicator = !this.indicator;
   }
+
+  
   
 
   ngOnDestroy() {

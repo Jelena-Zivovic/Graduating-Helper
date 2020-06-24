@@ -24,7 +24,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatGridListModule } from '@angular/material/grid-list';
 
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -43,6 +42,8 @@ import { CountPipe } from './pipes/count.pipe';
 import { WarningDirective } from './directives/warning.directive';
 import { NoMoreLearningDirective } from './directives/no-more-learning.directive';
 import { ChangeUserInfoComponent } from './user-info/change-user-info/change-user-info.component';
+import { TakeABreakComponent } from './take-a-break/take-a-break.component';
+import { LinkComponent } from './take-a-break/link/link.component';
 
 
 
@@ -63,7 +64,9 @@ import { ChangeUserInfoComponent } from './user-info/change-user-info/change-use
     CountPipe,
     WarningDirective,
     NoMoreLearningDirective,
-    ChangeUserInfoComponent
+    ChangeUserInfoComponent,
+    TakeABreakComponent,
+    LinkComponent
   ],
   imports: [
     BrowserModule,
