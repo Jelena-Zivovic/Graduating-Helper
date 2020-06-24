@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'learn-link',
@@ -9,6 +9,7 @@ export class LinkComponent implements OnInit {
 
   @Input() link; 
   @Input() chosenActivity;
+
 
   constructor() { }
 
@@ -23,5 +24,7 @@ export class LinkComponent implements OnInit {
       return "https://lagged.com";
     }
   }
+
+  
 
 }

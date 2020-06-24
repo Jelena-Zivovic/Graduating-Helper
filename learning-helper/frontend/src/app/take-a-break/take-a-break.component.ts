@@ -9,6 +9,7 @@ export class TakeABreakComponent implements OnInit {
 
   typeOfActivity: string = "";
   isActivityChosen: boolean = false;
+  message: string = "";
 
   constructor() { }
 
@@ -24,6 +25,9 @@ export class TakeABreakComponent implements OnInit {
     this.typeOfActivity = "music";
     this.isActivityChosen = true;
   }
+
+
+  
 
 
 
