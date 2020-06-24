@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Directive, Input, ElementRef } from '@angular/core';
 
 @Directive({
@@ -7,11 +8,14 @@ export class NoMoreLearningDirective {
 
   @Input() currentSubject;
 
-  constructor(private el: ElementRef) { }
+  constructor(private el: ElementRef, private router: Router) { }
 
   ngOnInit() {
     if (this.currentSubject.quantityOfMaterial === this.currentSubject.progress) {
       this.el.nativeElement.hidden = true;
+      this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+        this.router.navigate(['/learning']);
+      });
     }
     
   }

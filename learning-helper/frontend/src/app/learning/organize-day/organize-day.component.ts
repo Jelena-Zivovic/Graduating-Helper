@@ -156,6 +156,8 @@ export class OrganizeDayComponent implements OnInit {
       .subscribe(ret => {
         LearningComponent.activeTab = 1;
       });
+
+      
     
   }
 

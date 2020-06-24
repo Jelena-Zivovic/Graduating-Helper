@@ -12,8 +12,6 @@ import { LearningComponent } from '../learning/learning.component';
 })
 export class UserInfoComponent implements OnInit {
 
-  
-
   userInfo = {
     firstName: "",
     lastName: "",
@@ -94,13 +92,6 @@ export class UserInfoComponent implements OnInit {
 
   changeData() {
     this.indicator = !this.indicator;
-  }
-
-  reloadComponent(value: boolean) {
-    console.log("nesto");
-    if (value) {
-      console.log("Component needs to be reloaded");
-    }
   }
   
 
