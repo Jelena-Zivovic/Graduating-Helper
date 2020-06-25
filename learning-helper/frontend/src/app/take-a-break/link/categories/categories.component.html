@@ -1,0 +1,19 @@
+<mat-form-field *ngIf="typeOfActivity === 'music'">
+    <mat-label>Music genres</mat-label>
+    <mat-select>
+        <mat-option *ngFor="let genre of categoriesMusic" [value]="genre" (click)="sendChosenCategory($event)">
+            {{ genre }}
+        </mat-option>
+    </mat-select>
+    
+</mat-form-field>
+
+<mat-form-field *ngIf="typeOfActivity === 'game'">
+    <mat-label>Game categories</mat-label>
+    <mat-select>
+        <mat-option *ngFor="let game of categoriesGames" [value]="game" (click)="sendChosenCategory($event)">
+            {{ game }}
+        </mat-option>
+    </mat-select>
+    
+</mat-form-field>

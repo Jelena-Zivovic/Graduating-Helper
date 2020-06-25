@@ -1,4 +1,14 @@
+<mat-checkbox [disabled]="chosenActivity ? false : true"
+              (click)="setCheckedStatus()">Choose category</mat-checkbox>
+<br>
+
+<learn-categories *ngIf="isItChecked"
+                  [typeOfActivity]="link"
+                  (categoryIsChosen)="setNewUrl($event)"></learn-categories>
+<br>
+
 <a mat-flat-button [href]="getUrl()" 
                    target="_blank"
+                   id="linkClick"
                    [disabled]="chosenActivity ? false : true"
                    >Click!</a>

@@ -23,6 +23,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -44,6 +45,7 @@ import { NoMoreLearningDirective } from './directives/no-more-learning.directive
 import { ChangeUserInfoComponent } from './user-info/change-user-info/change-user-info.component';
 import { TakeABreakComponent } from './take-a-break/take-a-break.component';
 import { LinkComponent } from './take-a-break/link/link.component';
+import { CategoriesComponent } from './take-a-break/link/categories/categories.component';
 
 
 
@@ -66,7 +68,8 @@ import { LinkComponent } from './take-a-break/link/link.component';
     NoMoreLearningDirective,
     ChangeUserInfoComponent,
     TakeABreakComponent,
-    LinkComponent
+    LinkComponent,
+    CategoriesComponent
   ],
   imports: [
     BrowserModule,
@@ -90,7 +93,8 @@ import { LinkComponent } from './take-a-break/link/link.component';
     MatProgressSpinnerModule,
     CommonModule,
     MatTooltipModule,
-    MatGridListModule
+    MatGridListModule,
+    MatCheckboxModule
   ],
   providers: [
     AuthenticationService,

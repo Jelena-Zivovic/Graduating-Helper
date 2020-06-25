@@ -26,6 +26,7 @@ export class TakeABreakComponent implements OnInit {
     this.isActivityChosen = true;
   }
 
+ 
 
   
 
